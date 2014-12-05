@@ -1,5 +1,4 @@
 # local data
-development.db
 uploads/*
 static/*
 
