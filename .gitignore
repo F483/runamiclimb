@@ -1,0 +1,18 @@
+# local data
+development.db
+uploads/*
+static/*
+
+# local config
+config/local_settings.py
+config/ssl/*
+config/flags/*
+
+# setuptools
+runamiclimb.egg-info/*
+dist/*
+build/*
+env/*
+
+# development
+scripts/sandbox.py
