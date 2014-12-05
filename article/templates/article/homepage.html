@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sports Blog Website</title>
+</head>
+
+
+
+<body>
+	<p>Sports Homepage</p>
+	<ul>
+	{% for article in articles %}
+    	<li>{{ article.title }}</li>
+	{% endfor %}
+</ul>
+</body>
+</html>
