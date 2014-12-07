@@ -1,19 +1,29 @@
-<!doctype html>
-<html lang="en">
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Sports Blog Website</title>
-</head>
+{% extends "article/base.html" %}
 
 
-
-<body>
-	<p>Sports Homepage</p>
-	<ul>
-	{% for article in articles %}
-    	<li>{{ article.title }}</li>
-	{% endfor %}
-</ul>
-</body>
-</html>
+{% block content %}
+  <div class="container"> 
+    <p>Sports Homepage</p>
+    {% for article in articles %}
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-6">
+                {{ article.title }}
+              </div>
+              <div class="col-lg-6">
+                <div class="pull-right">
+                  {{ article.author }} - {{ article.date }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            {{ article.preview }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %} 
