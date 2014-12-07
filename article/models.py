@@ -9,6 +9,18 @@ class Article(models.Model):
   date = models.DateField()
   preview = models.TextField()
   content = models.TextField()
+  category = models.ForeignKey("article.Category", related_name="articles", null=True)
   def url(self):
   	return "/article/%s/%s.html" % (self.id, "todo-title-slug")
 
+  def __unicode__(self):
+  	return self.title
+
+
+
+class Category(models.Model):
+
+  title = models.CharField(max_length=1024)
+  def __unicode__(self):
+  	return self.title
+  	

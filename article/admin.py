@@ -5,3 +5,8 @@ from django.contrib import admin
 from article.models import Article
 
 admin.site.register(Article)
+
+
+from article.models import Category
+
+admin.site.register(Category)
