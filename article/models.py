@@ -10,6 +10,8 @@ class Article(models.Model):
   preview = models.TextField()
   content = models.TextField()
   category = models.ForeignKey("article.Category", related_name="articles", null=True)
+  featured = models.BooleanField(default=False)
+  issue = models.ForeignKey("article.Issue", related_name="articles", null=True)
   def url(self):
   	return "/article/%s/%s.html" % (self.id, "todo-title-slug")
 
@@ -23,4 +25,12 @@ class Category(models.Model):
   title = models.CharField(max_length=1024)
   def __unicode__(self):
   	return self.title
+
+
+class Issue(models.Model):
+
+  month = models.IntegerField()
+  year = models.IntegerField()
+  def __unicode__(self):
+    return "%i - %i" % (self.year, self.month)
   	
