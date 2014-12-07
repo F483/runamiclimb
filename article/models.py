@@ -9,4 +9,6 @@ class Article(models.Model):
   date = models.DateField()
   preview = models.TextField()
   content = models.TextField()
+  def url(self):
+  	return "/article/%s/%s.html" % (self.id, "todo-title-slug")
 
