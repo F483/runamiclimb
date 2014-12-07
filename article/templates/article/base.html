@@ -19,7 +19,12 @@
   <body>
       <div class="container"> 
       {% for category in categories %}
-      <a href="#" class="btn btn-default">{{category.title}}</a>
+               {% if category == currentcategory %}
+                <a href="#" class="btn btn-primary">{{category.title}}</a>
+               {% else %}
+                <a href="#" class="btn btn-default">{{category.title}}</a>
+               {% endif %}
+
       {% endfor %}
       </div>
 
@@ -27,19 +32,27 @@
 
       <p>
 
-
+<div class="container">
     <div class="row">
-      <div class="col-lg-9">
+      <div class="col-sm-9">
         {% block content %}
         {% endblock %}
       </div>
-      <div class="col-lg-3"><ul>
-        {% for issue in issues %}
-        <li><a href="#">{{issue}}</a></li>
-        {% endfor %}</ul>
-      </div>
-      </div>
+      <div class="col-sm-3">
+        <ul>
+          {% for issue in issues %}
+               
+               {% if issue == currentissue %}
+                  <li><b><a href="">{{issue}}</a></b></li>
+               {% else %}
+                      <li><a href="">{{issue}}</a></li>
+               {% endif %}
 
+          {% endfor %}
+        </ul>
+      </div>
+      </div>
+</div>
 
     {##### JQUERY SCRIPT #####}                                                  
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>         
