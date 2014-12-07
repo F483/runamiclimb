@@ -1,6 +1,7 @@
 # local data
 uploads/*
 static/*
+development.db
 
 # local config
 config/local_settings.py
