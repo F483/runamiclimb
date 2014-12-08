@@ -18,21 +18,29 @@
 
   <body>
     <div class="container"> 
-      <h1> Sports homepage </h1>
+      <h1><a href="/">Sports homepage</a></h1>
     </div>
 
     <div class="container"> 
+
+
+ <ul class="nav nav-pills">
       {% for category in categories %}
         {% if category == currentcategory %}
-          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-primary">
+         <li class="active">
+          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/">
             {{category.title}}
           </a>
+        </li>
         {% else %}
-          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-default">
+         <li>
+          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/">
             {{category.title}}
           </a>
+        </li>
         {% endif %}
       {% endfor %}
+  </ul>
     </div>
 
     <div class="container">
