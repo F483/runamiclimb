@@ -31,6 +31,12 @@ class Issue(models.Model):
 
   month = models.IntegerField()
   year = models.IntegerField()
+
   def __unicode__(self):
     return "%i - %i" % (self.year, self.month)
   	
+  class Meta:
+
+    ordering = ["-year", "-month"]
+    #unique_together = (("user", "bounty"),)
+
