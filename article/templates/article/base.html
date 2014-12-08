@@ -17,53 +17,47 @@
   </head>
 
   <body>
-      <div class="container"> 
+    <div class="container"> 
+      <h1> Sports homepage </h1>
+    </div>
+
+    <div class="container"> 
       {% for category in categories %}
-               {% if category == currentcategory %}
-                <a href="/articles/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-primary">{{category.title}}</a>
-               {% else %}
-                <a href="/articles/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-default">{{category.title}}</a>
-               {% endif %}
-
+        {% if category == currentcategory %}
+          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-primary">
+            {{category.title}}
+          </a>
+        {% else %}
+          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-default">
+            {{category.title}}
+          </a>
+        {% endif %}
       {% endfor %}
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9">
+          {% block content %}
+          {% endblock %}
+        </div>
+        <div class="col-sm-3">
+          <ul>
+            {% for issue in issues %}
+              {% if issue == currentissue %}
+                <b>
+              {% endif %}
+              <li>
+                <a href="/issue/{{issue.year}}-{{issue.month}}/">{{issue}}</a>
+              </li>
+              {% if issue == currentissue %}
+                </b>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-
-      
-
-      <p>
-
-<div class="container">
-    <div class="row">
-      <div class="col-sm-9">
-        {% block content %}
-        {% endblock %}
-      </div>
-      <div class="col-sm-3">
-        <ul>
-          {% for issue in issues %}
-               
-               {% if issue == currentissue %}
-
-                  <b>
-               {% endif %}
-               
-               {% if currentcategory %}
-                <li><a href="/articles/{{currentcategory}}/{{issue.year}}-{{issue.month}}/">{{issue}}</a></li>
-
-               {% else %}
-                <li><a href="/issue/{{issue.year}}-{{issue.month}}/">{{issue}}</a></li>
-               {% endif %}
-               
-
-               {% if issue == currentissue %}
-                      
-                  </b>
-               {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
-      </div>
-</div>
+    </div>
 
     {##### JQUERY SCRIPT #####}                                                  
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>         

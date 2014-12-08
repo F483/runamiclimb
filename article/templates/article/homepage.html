@@ -2,26 +2,25 @@
 
 
 {% block content %}
-    <p>Sports Homepage</p>
-    {% for article in articles %}
-      <div class="col-lg-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-lg-6">
-                <a href="{{article.url}}">{{ article.title }}</a>
-              </div>
-              <div class="col-lg-6">
-                <div class="pull-right">
-                  {{ article.author }} - {{ article.date }}
-                </div>
+  {% for article in articles %}
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-lg-6">
+              <a href="{{article.url}}">{{ article.title }}</a>
+            </div>
+            <div class="col-lg-6">
+              <div class="pull-right">
+                {{ article.author }} - {{ article.date }}
               </div>
             </div>
           </div>
-          <div class="panel-body">
-            {{ article.preview }}
-          </div>
+        </div>
+        <div class="panel-body">
+          {{ article.preview }}
         </div>
       </div>
-    {% endfor %}
+    </div>
+  {% endfor %}
 {% endblock %} 

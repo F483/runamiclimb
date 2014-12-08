@@ -5,14 +5,13 @@ from article.models import Category
 from article.models import Issue
 from django.shortcuts import get_object_or_404
 
-def issue(request, month, year):
-    return listarticles(request, None, month, year)
-
 def homepage(request):
     return listarticles(request, None, None, None)
 
+def issue(request, year, month):
+    return listarticles(request, None, year, month)
 
-def listarticles(request, category_title, month, year):
+def listarticles(request, category_title, year, month):
     articles = Article.objects.all()
 
     currentcategory = None
