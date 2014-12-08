@@ -39,7 +39,10 @@ class Issue(models.Model):
   year = models.IntegerField()
 
   def __unicode__(self):
-    return "%i - %i" % (self.year, self.month)
+    months = [
+    "Jananuary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+    ]
+    return "%i - %s" % (self.year, months[self.month -1])
     
   class Meta:
 
