@@ -22,25 +22,36 @@
     </div>
 
     <div class="container"> 
-
-
- <ul class="nav nav-pills">
-      {% for category in categories %}
-        {% if category == currentcategory %}
-         <li class="active">
-          <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
-            {{category.title}}
-          </a>
-        </li>
-        {% else %}
-         <li>
-          <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
-            {{category.title}}
-          </a>
-        </li>
-        {% endif %}
-      {% endfor %}
-  </ul>
+     <ul class="nav nav-pills">
+          {% if not currentcategory %}
+             <li class="active">
+              <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
+                Featured
+              </a>
+            </li>
+            {% else %}
+             <li>
+              <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
+                Featured
+              </a>
+            </li>
+            {% endif %}
+          {% for category in categories %}
+            {% if category == currentcategory %}
+             <li class="active">
+              <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
+                {{category.title}}
+              </a>
+            </li>
+            {% else %}
+             <li>
+              <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
+                {{category.title}}
+              </a>
+            </li>
+            {% endif %}
+          {% endfor %}
+      </ul>
     </div>
 
     <div class="container">
@@ -50,19 +61,15 @@
           {% endblock %}
         </div>
         <div class="col-sm-3">
-          <ul>
+          <div class="list-group">
             {% for issue in issues %}
               {% if issue == currentissue %}
-                <b>
-              {% endif %}
-              <li>
-                <a href="/issue/{{issue.year}}-{{issue.month}}/">{{issue}}</a>
-              </li>
-              {% if issue == currentissue %}
-                </b>
+                <a href="/issue/{{issue.year}}-{{issue.month}}/" class="list-group-item active">{{issue}}</a>
+              {% else %}
+                <a href="/issue/{{issue.year}}-{{issue.month}}/" class="list-group-item">{{issue}}</a>
               {% endif %}
             {% endfor %}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
