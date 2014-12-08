@@ -28,13 +28,13 @@
       {% for category in categories %}
         {% if category == currentcategory %}
          <li class="active">
-          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/">
+          <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
             {{category.title}}
           </a>
         </li>
         {% else %}
          <li>
-          <a href="/category/{{category}}/{{currentissue.year}}-{{currentissue.month}}/">
+          <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
             {{category.title}}
           </a>
         </li>

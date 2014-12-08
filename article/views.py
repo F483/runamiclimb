@@ -13,7 +13,6 @@ def issue(request, year, month):
   return listarticles(request, None, year, month)
 
 def listarticles(request, category_slug, year, month):
-  import pudb; pu.db
   articles = Article.objects.all()
   categories = Category.objects.all()
   issues = Issue.objects.all()
@@ -23,12 +22,10 @@ def listarticles(request, category_slug, year, month):
     articles = articles.filter(featured=True)
   else:
     for category in categories:
-      slug = category.slug()
-      if slug == category_slug:
-        currentcategory == category
+      if category.slug() == category_slug:
+        currentcategory = category
     if not currentcategory:
-      raise Exception("test")
-      #raise Http404
+      raise Http404
     articles = articles.filter(category=currentcategory)
 
   currentissue = None
