@@ -20,9 +20,9 @@
       <div class="container"> 
       {% for category in categories %}
                {% if category == currentcategory %}
-                <a href="#" class="btn btn-primary">{{category.title}}</a>
+                <a href="/articles/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-primary">{{category.title}}</a>
                {% else %}
-                <a href="#" class="btn btn-default">{{category.title}}</a>
+                <a href="/articles/{{category}}/{{currentissue.year}}-{{currentissue.month}}/" class="btn btn-default">{{category.title}}</a>
                {% endif %}
 
       {% endfor %}
@@ -43,11 +43,22 @@
           {% for issue in issues %}
                
                {% if issue == currentissue %}
-                  <li><b><a href="">{{issue}}</a></b></li>
-               {% else %}
-                      <li><a href="">{{issue}}</a></li>
-               {% endif %}
 
+                  <b>
+               {% endif %}
+               
+               {% if currentcategory %}
+                <li><a href="/articles/{{currentcategory}}/{{issue.year}}-{{issue.month}}/">{{issue}}</a></li>
+
+               {% else %}
+                <li><a href="/issue/{{issue.year}}-{{issue.month}}/">{{issue}}</a></li>
+               {% endif %}
+               
+
+               {% if issue == currentissue %}
+                      
+                  </b>
+               {% endif %}
           {% endfor %}
         </ul>
       </div>

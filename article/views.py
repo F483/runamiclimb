@@ -5,6 +5,8 @@ from article.models import Category
 from article.models import Issue
 from django.shortcuts import get_object_or_404
 
+def issue(request, month, year):
+    return listarticles(request, None, month, year)
 
 def homepage(request):
     return listarticles(request, None, None, None)
