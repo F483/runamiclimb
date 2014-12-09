@@ -7,5 +7,6 @@ urlpatterns = patterns('article.views',
   url(r"^issue/(?P<year>[0-9]+)\-(?P<month>[0-9]+)/", "issue"),
   url(r"^article/(?P<id>[0-9]+)/[a-z0-9\-]+\.html$", "displayarticle"),
   url(r"^article/submit.html$", "submit"),
+  url(r"^article/edit/(?P<id>[0-9]+)/[a-z0-9\-]+\.html$", "edit"),
 
 )

@@ -8,6 +8,7 @@ from article import forms
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.http import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
 
 def homepage(request):
   return listarticles(request, None, None, None)
@@ -25,7 +26,7 @@ def submit(request):
       article = Article()
       article.title = form.cleaned_data["title"].strip()
       article.author = form.cleaned_data["author"].strip()
-      # TODO email = form.cleaned_data["email"]
+      article.email = form.cleaned_data["email"].strip()
       article.content = form.cleaned_data["content"]
       article.date = datetime.date.today()
       article.save()
@@ -38,30 +39,39 @@ def submit(request):
     "issues" : issues,
     "form" : form,
     "cancel_url" : "/",
+    "title" : "Submit Article"
   }
   return render(request, 'article/submit.html', templatearguments)
 
-def _example_submit(request):
+def edit(request, id):
+  if not request.user.is_superuser:
+    raise PermissionDenied
+
+  article = get_object_or_404(Article, id=id)
+  categories = Category.objects.all()
+  issues = Issue.objects.all()
+
   if request.method == "POST":
-    form = forms.CreateBounty(request.POST)
+    form = forms.Edit(request.POST, article=article)
     if form.is_valid():
-      bounty = control.create(
-        request.user,
-        form.cleaned_data["title"].strip(),
-        form.cleaned_data["description"].strip(),
-        form.cleaned_data["tags"].strip(),
-        form.cleaned_data["target"],
-        form.cleaned_data["deadline"]
-      )
-      return HttpResponseRedirect(bounty.url_funds)
-  else:
-    form = forms.CreateBounty()
-  args = {
-    "form" : form, "form_title" : _("CREATE_BOUNTY"),
+      article.title = form.cleaned_data["title"].strip()
+      article.author = form.cleaned_data["author"].strip()
+      article.email = form.cleaned_data["email"].strip()
+      article.content = form.cleaned_data["content"]
+      article.save()
+      return HttpResponseRedirect(article.url())
+  else: # "GET"
+    form = forms.Edit(article=article)
+
+  templatearguments = {
+    "categories" : categories,
+    "issues" : issues,
+    "form" : form,
     "cancel_url" : "/",
-    "navbar_active" : "CREATE",
+    "title" : "Edit Article"
   }
-  return render_response(request, 'site/form.html', args)
+  return render(request, 'article/submit.html', templatearguments)
+
 
 
 

@@ -14,10 +14,15 @@ class Article(models.Model):
   category = models.ForeignKey("article.Category", related_name="articles", null=True)
   featured = models.BooleanField(default=False)
   issue = models.ForeignKey("article.Issue", related_name="articles", null=True)
+  email = models.EmailField(max_length=1024)
 
   def url(self):
     title_slug = slugify(unidecode(self.title)) 
     return "/article/%s/%s.html" % (self.id, title_slug)
+
+  def editurl(self):
+    title_slug = slugify(unidecode(self.title)) 
+    return "/article/edit/%s/%s.html" % (self.id, title_slug)
 
   def __unicode__(self):
     return self.title

@@ -17,6 +17,10 @@
     </div>
     <div class="panel-body">
       {{ article.content|render_markdown }}
+      {% if user.is_superuser %}
+          <a href="{{article.editurl}}" class="btn btn-default">Edit</a>
+      {% endif %}
+
     </div>
   </div>
 {% endblock %} 

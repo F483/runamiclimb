@@ -13,7 +13,7 @@ register = template.Library()
 @register.filter
 def render_markdown(usertext):
   tags = [
-    'a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'h1', 'h2', 'h3',
+    'a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'br',  'h1', 'h2', 'h3',
     'h4', 'h5', 'h6', 'hr', 'i', 'img', 'li', 'ol', 'p', 'pre', 'strong', 'ul'
   ]
   attributes = {
