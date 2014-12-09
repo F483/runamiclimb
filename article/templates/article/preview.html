@@ -1,0 +1,11 @@
+{% load article_tags %}
+
+<div class="panel panel-default panel-body">
+
+  <a href="{{article.url}}"><h3>{{ article.title }}</h3></a>
+
+  <p> {{ article.preview|render_markdown }} </p>
+
+  <p><a href="{{article.url}}"><b>Read full article</b></a></p>
+
+</div>

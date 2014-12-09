@@ -98,9 +98,11 @@ def listing(request, category_slug, year, month):
   else:
     currentissue = Issue.objects.all()[0]
   articles = articles.filter(issue=currentissue)
-
+        
+  left_articles, right_articles = [ articles[i::2] for i in xrange(2) ]  
   templatearguments = {
-    "articles" : articles,
+    "left_articles" : left_articles,
+    "right_articles" : right_articles,
     "categories" : categories,
     "issues" : issues,
     "currentcategory" : currentcategory,
