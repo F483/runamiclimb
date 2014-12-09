@@ -16,7 +16,8 @@ class Article(models.Model):
   issue = models.ForeignKey("article.Issue", related_name="articles", null=True)
 
   def url(self):
-    return "/article/%s/%s.html" % (self.id, "todo-title-slug")
+    title_slug = slugify(unidecode(self.title)) 
+    return "/article/%s/%s.html" % (self.id, title_slug)
 
   def __unicode__(self):
     return self.title

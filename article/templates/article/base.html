@@ -14,6 +14,11 @@
       <script src="/static/bootswatch/bower_components/html5shiv/dist/html5shiv.js"></script>
       <script src="/static/bootswatch/bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
+
+    {##### PAGEDOWN BOOTSTRAP #####}                                                                            
+    <link href="/static/Font-Awesome/css/font-awesome.min.css" rel="stylesheet"> 
+    <link href="/static/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -22,37 +27,53 @@
     </div>
 
     <div class="container"> 
-     <ul class="nav nav-pills">
-          {% if not currentcategory %}
-             <li class="active">
-              <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
-                Featured
-              </a>
-            </li>
+      <div class="row">
+        <div class="col-sm-9">
+          
+          {# CATEGORY NAVIGATION #}
+          <ul class="nav nav-pills">
+            {% if not currentcategory %}
+              <li class="active">
+                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
+                  Featured
+                </a>
+              </li>
             {% else %}
-             <li>
-              <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
-                Featured
-              </a>
-            </li>
+              <li>
+                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
+                  Featured
+                </a>
+              </li>
             {% endif %}
-          {% for category in categories %}
-            {% if category == currentcategory %}
-             <li class="active">
-              <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
-                {{category.title}}
-              </a>
-            </li>
-            {% else %}
-             <li>
-              <a href="/category/{{category.slug}}/{{currentissue.year}}-{{currentissue.month}}/">
-                {{category.title}}
-              </a>
-            </li>
-            {% endif %}
-          {% endfor %}
-      </ul>
+            {% for category in categories %}
+              {% if category == currentcategory %}
+               <li class="active">
+                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
+                  {{category.title}}
+                </a>
+              </li>
+              {% else %}
+               <li>
+                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
+                  {{category.title}}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+        </div>
+        <div class="col-sm-3">
+          {# SUBMIT ARTICLE #}
+          <div class="list-group">
+            <a href="/article/submit.html" class="list-group-item">Submit Article</a>
+          </div>
+        </div>
+      </div>
+
+
     </div>
+
     <p>
     </p>
     <div class="container">
@@ -82,6 +103,14 @@
     {##### BOOTSWATCH SCRIPT #####}
     <script src="/static/bootswatch/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/static/bootswatch/assets/js/bootswatch.js"></script>
+
+    {##### PAGEDOWN BOOTSTRAP SCRIPT #####}                                                              
+    <script type="text/javascript" src="/static/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js"></script>
+    <script type="text/javascript">                                              
+      (function () {                                                             
+        $("textarea.pagedownBootstrap").pagedownBootstrap();                      
+      })();                                                                      
+    </script>     
 
   </body>
 

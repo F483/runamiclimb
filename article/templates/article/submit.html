@@ -1,0 +1,33 @@
+{% extends "article/base.html" %}
+{% load article_tags %}
+{% load bootstrap %}
+
+{% block content %}
+  <div class="well">
+
+    <form class="form" role="form" action="{{ request.get_full_path }}" method="POST">
+      {% csrf_token %}
+      <fieldset>
+
+        {##### TITLE #####}
+        <legend>Submit Article</legend>
+
+        {##### RENDER FORM #####}
+        {{ form|bootstrap }}
+
+        {##### CANCEL AND SUBMIT BUTTONS #####}
+        <div class="form-group">
+          <button type="button" class="btn btn-default"
+                  onclick="window.location.href = '{{ cancel_url }}';">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+
+      </fieldset>
+    </form>
+
+  </div>
+{% endblock %}
