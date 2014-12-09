@@ -15,102 +15,63 @@
       <script src="/static/bootswatch/bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
 
-    {##### PAGEDOWN BOOTSTRAP #####}                                                                            
-    <link href="/static/Font-Awesome/css/font-awesome.min.css" rel="stylesheet"> 
+    {##### PAGEDOWN BOOTSTRAP #####}
+    <link href="/static/Font-Awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css" rel="stylesheet">
 
   </head>
 
   <body>
-    <div class="container"> 
-      <h1><a href="/">Sports homepage</a></h1>
+    <div class="container">
+      <a href="/"><h1>TRAINLESS</h1></a>
     </div>
 
-    <div class="container"> 
-      <div class="row">
-        <div class="col-sm-9">
-          
-          {# CATEGORY NAVIGATION #}
-          <ul class="nav nav-pills">
-            {% if not currentcategory %}
-              <li class="active">
-                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
-                  Featured
-                </a>
-              </li>
-            {% else %}
-              <li>
-                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
-                  Featured
-                </a>
-              </li>
-            {% endif %}
-            {% for category in categories %}
-              {% if category == currentcategory %}
-               <li class="active">
-                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
-                  {{category.title}}
-                </a>
-              </li>
-              {% else %}
-               <li>
-                <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
-                  {{category.title}}
-                </a>
-              </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-
-        </div>
-        <div class="col-sm-3">
-          {# SUBMIT ARTICLE #}
-          <div class="list-group">
-            <a href="/article/submit.html" class="list-group-item">Submit Article</a>
-          </div>
-        </div>
-      </div>
-
-
+    <div class="container">
+      {% include "article/categories.html" %}
     </div>
 
-    <p>
-    </p>
+    <p></p>
+
     <div class="container">
       <div class="row">
+
         <div class="col-sm-9">
           {% block content %}
           {% endblock %}
         </div>
+
         <div class="col-sm-3">
+
+          {# SUBMIT ARTICLE #}
           <div class="list-group">
-            {% for issue in issues %}
-              {% if issue == currentissue %}
-                <a href="/issue/{{issue.year}}-{{issue.month}}/" class="list-group-item active">{{issue}}</a>
-              {% else %}
-                <a href="/issue/{{issue.year}}-{{issue.month}}/" class="list-group-item">{{issue}}</a>
-              {% endif %}
-            {% endfor %}
+            <a href="/article/submit.html" class="list-group-item">Submit</a>
           </div>
+
+          <hr>
+
+          {% include "article/issues.html" %}
+
         </div>
       </div>
     </div>
 
-    {##### JQUERY SCRIPT #####}                                                  
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>         
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>  
+    {% include "article/footer.html" %}
+
+    {##### JQUERY SCRIPT #####}
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     {##### BOOTSWATCH SCRIPT #####}
     <script src="/static/bootswatch/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/static/bootswatch/assets/js/bootswatch.js"></script>
 
-    {##### PAGEDOWN BOOTSTRAP SCRIPT #####}                                                              
+    {##### PAGEDOWN BOOTSTRAP SCRIPT #####}
     <script type="text/javascript" src="/static/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js"></script>
-    <script type="text/javascript">                                              
-      (function () {                                                             
-        $("textarea.pagedownBootstrap").pagedownBootstrap();                      
-      })();                                                                      
-    </script>     
+    <script type="text/javascript">
+      (function () {
+        $("textarea.pagedownBootstrap").pagedownBootstrap();
+      })();
+    </script>
 
   </body>
 

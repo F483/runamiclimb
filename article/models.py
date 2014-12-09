@@ -1,30 +1,37 @@
-from unidecode import unidecode                                                                                 
+from unidecode import unidecode
 from django.db import models
-from django.template.defaultfilters import slugify                               
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
 class Article(models.Model):
 
-  title = models.CharField(max_length=1024)
   author = models.CharField(max_length=1024)
-  date = models.DateField()
+  title = models.CharField(max_length=1024)
   preview = models.TextField()
   content = models.TextField()
-  category = models.ForeignKey("article.Category", related_name="articles", null=True)
+  coverletter = models.TextField()
   featured = models.BooleanField(default=False)
+  category = models.ForeignKey("article.Category", related_name="articles", null=True)
   issue = models.ForeignKey("article.Issue", related_name="articles", null=True)
-  email = models.EmailField(max_length=1024)
+
+  email = models.EmailField(max_length=1024) # TODO get from author user object
 
   def url(self):
-    title_slug = slugify(unidecode(self.title)) 
+    title_slug = slugify(unidecode(self.title))
     return "/article/%s/%s.html" % (self.id, title_slug)
 
   def editurl(self):
-    title_slug = slugify(unidecode(self.title)) 
+    title_slug = slugify(unidecode(self.title))
     return "/article/edit/%s/%s.html" % (self.id, title_slug)
 
   def __unicode__(self):
+    if not self.issue and not self.category:
+      return "%s (no issue and category)" % self.title
+    if not self.category:
+      return "%s (no category)" % self.title
+    if not self.issue:
+      return "%s (no issue)" % self.title
     return self.title
 
 
@@ -33,7 +40,7 @@ class Category(models.Model):
   title = models.CharField(max_length=1024)
 
   def slug(self):
-    return slugify(unidecode(self.title)) 
+    return slugify(unidecode(self.title))
 
   def __unicode__(self):
     return self.title
@@ -46,10 +53,21 @@ class Issue(models.Model):
 
   def __unicode__(self):
     months = [
-    "Jananuary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+        "Jananuary",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
     ]
-    return "%i - %s" % (self.year, months[self.month -1])
-    
+    return "%s %i" % (months[self.month -1], self.year)
+
   class Meta:
 
     ordering = ["-year", "-month"]

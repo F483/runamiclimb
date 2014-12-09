@@ -1,0 +1,27 @@
+{% extends "article/base.html" %}
+{% load article_tags %}
+
+{% block content %}
+
+  <h1>{{ article.title }}</h1>
+  <p>
+    By {{ article.author }} <br>
+    {{ article.issue }}
+  </p>
+
+  <p> <hr> </p>
+
+  <p> {{ article.content|render_markdown }} </p>
+
+  <hr>
+
+  <p> {{ article.coverletter|render_markdown }} </p>
+
+  <p>
+    <a href="/TODO" class="btn btn-success">Pay Author</a>
+    {% if user.is_superuser %}
+      <a href="{{article.editurl}}" class="btn btn-primary">Edit</a>
+    {% endif %}
+  </p>
+
+{% endblock %} 

@@ -10,15 +10,10 @@ from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
-def homepage(request):
-  return listarticles(request, None, None, None)
-
-def issue(request, year, month):
-  return listarticles(request, None, year, month)
-
 def submit(request):
   categories = Category.objects.all()
   issues = Issue.objects.all()
+  currentissue = issues[0]
 
   if request.method == "POST":
     form = forms.Submit(request.POST)
@@ -28,7 +23,7 @@ def submit(request):
       article.author = form.cleaned_data["author"].strip()
       article.email = form.cleaned_data["email"].strip()
       article.content = form.cleaned_data["content"]
-      article.date = datetime.date.today()
+      article.coverletter = form.cleaned_data["coverletter"]
       article.save()
       return HttpResponseRedirect("/")
   else: # "GET"
@@ -39,43 +34,49 @@ def submit(request):
     "issues" : issues,
     "form" : form,
     "cancel_url" : "/",
-    "title" : "Submit Article"
+    "title" : "Submit Article",
+    "currentissue" : currentissue,
   }
   return render(request, 'article/submit.html', templatearguments)
 
-def edit(request, id):
+def edit(request, article_id):
   if not request.user.is_superuser:
     raise PermissionDenied
 
-  article = get_object_or_404(Article, id=id)
+  article = get_object_or_404(Article, id=article_id)
   categories = Category.objects.all()
   issues = Issue.objects.all()
+  currentissue = article.issue and article.issue or issues[0]
+  currentcategory = article.category and article.category or None
 
   if request.method == "POST":
     form = forms.Edit(request.POST, article=article)
     if form.is_valid():
       article.title = form.cleaned_data["title"].strip()
       article.author = form.cleaned_data["author"].strip()
-      article.email = form.cleaned_data["email"].strip()
+      article.preview = form.cleaned_data["preview"]
       article.content = form.cleaned_data["content"]
+      article.coverletter = form.cleaned_data["coverletter"]
+      article.issue = form.cleaned_data["issue"]
+      article.category = form.cleaned_data["category"]
+      article.featured = form.cleaned_data["featured"]
       article.save()
       return HttpResponseRedirect(article.url())
   else: # "GET"
     form = forms.Edit(article=article)
 
   templatearguments = {
-    "categories" : categories,
     "issues" : issues,
+    "currentissue" : currentissue,
+    "categories" : categories,
+    "currentcategory" : currentcategory,
     "form" : form,
-    "cancel_url" : "/",
-    "title" : "Edit Article"
+    "cancel_url" : article.url(),
+    "title" : "Edit Article",
   }
   return render(request, 'article/submit.html', templatearguments)
 
-
-
-
-def listarticles(request, category_slug, year, month):
+def listing(request, category_slug, year, month):
   articles = Article.objects.all()
   categories = Category.objects.all()
   issues = Issue.objects.all()
@@ -105,10 +106,10 @@ def listarticles(request, category_slug, year, month):
     "currentcategory" : currentcategory,
     "currentissue" : currentissue,
   }
-  return render(request, 'article/homepage.html', templatearguments)
+  return render(request, 'article/listing.html', templatearguments)
 
-def displayarticle(request, id):
-  article = get_object_or_404(Article, id=id)
+def display(request, article_id):
+  article = get_object_or_404(Article, id=article_id)
   categories = Category.objects.all()
   issues = Issue.objects.all()
   currentissue = article.issue
@@ -120,5 +121,5 @@ def displayarticle(request, id):
     "currentcategory" : currentcategory,
     "currentissue" : currentissue,
   }
-  return render(request, 'article/article.html', templatearguments)
+  return render(request, 'article/display.html', templatearguments)
 

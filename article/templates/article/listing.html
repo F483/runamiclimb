@@ -1,0 +1,18 @@
+{% extends "article/base.html" %}
+{% load article_tags %}
+
+{% block content %}
+  {% for article in articles %}
+    <div class="col-lg-6">
+      <div class="panel panel-default panel-body">
+
+        <a href="{{article.url}}"><h3>{{ article.title }}</h3></a>
+
+        <p> {{ article.preview|render_markdown }} </p>
+
+        <p><a href="{{article.url}}"><b>Read full article</b></a></p>
+
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

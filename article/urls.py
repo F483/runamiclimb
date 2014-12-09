@@ -1,12 +1,39 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns = patterns('article.views',
-  url(r"^$", "homepage"),
+article_id = r"(?P<article_id>[0-9]+)"
+year = r"(?P<year>[0-9]+)"
+month = r"(?P<month>[0-9]+)"
+category_slug = r"(?P<category_slug>[a-z0-9\-]+)"
 
-  url(r"^issue/(?P<year>[0-9]+)\-(?P<month>[0-9]+)/category/(?P<category_slug>[a-z0-9\-]+)/", "listarticles"),
-  url(r"^issue/(?P<year>[0-9]+)\-(?P<month>[0-9]+)/", "issue"),
-  url(r"^article/(?P<id>[0-9]+)/[a-z0-9\-]+\.html$", "displayarticle"),
+urlpatterns = patterns('article.views',
+  
+  # homepage view
+  url(
+    r"^$", 
+    "listing",
+    { 'year' : None, 'month' : None, 'category_slug' : None}
+  ),
+
+  # issue view
+  url(
+    r"^issue/%s\-%s/$" % (year, month), 
+    "listing",
+    { 'category_slug' : None}
+  ),
+
+  # issue category view
+  url(
+    r"^issue/%s\-%s/category/%s/$" % (year, month, category_slug), 
+    "listing"
+  ),
+
+  # article view
+  url(r"^article/%s/[a-z0-9\-]+\.html$" % article_id, "display"),
+
+  # edit article view
+  url(r"^article/edit/%s/[a-z0-9\-]+\.html$" % article_id, "edit"),
+
+  # submit article view
   url(r"^article/submit.html$", "submit"),
-  url(r"^article/edit/(?P<id>[0-9]+)/[a-z0-9\-]+\.html$", "edit"),
 
 )

@@ -1,0 +1,30 @@
+<ul class="nav nav-pills">
+  {% if not currentcategory %}
+    <li class="active">
+      <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
+        Featured
+      </a>
+    </li>
+  {% else %}
+    <li>
+      <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/">
+        Featured
+      </a>
+    </li>
+  {% endif %}
+  {% for category in categories %}
+    {% if category == currentcategory %}
+     <li class="active">
+      <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
+        {{category.title}}
+      </a>
+    </li>
+    {% else %}
+     <li>
+      <a href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
+        {{category.title}}
+      </a>
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
