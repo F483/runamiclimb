@@ -11,9 +11,6 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
 def submit(request):
-  categories = Category.objects.all()
-  issues = Issue.objects.all()
-  currentissue = issues[0]
 
   if request.method == "POST":
     form = forms.Submit(request.POST)
@@ -30,12 +27,10 @@ def submit(request):
     form = forms.Submit()
 
   templatearguments = {
-    "categories" : categories,
-    "issues" : issues,
     "form" : form,
     "cancel_url" : "/",
     "title" : "Submit Article",
-    "currentissue" : currentissue,
+    "currentissue" : Issue.objects.all()[0],
   }
   return render(request, 'article/submit.html', templatearguments)
 
@@ -44,9 +39,7 @@ def edit(request, article_id):
     raise PermissionDenied
 
   article = get_object_or_404(Article, id=article_id)
-  categories = Category.objects.all()
-  issues = Issue.objects.all()
-  currentissue = article.issue and article.issue or issues[0]
+  currentissue = article.issue and article.issue or Issue.objects.all()[0]
   currentcategory = article.category and article.category or None
 
   if request.method == "POST":
@@ -66,9 +59,7 @@ def edit(request, article_id):
     form = forms.Edit(article=article)
 
   templatearguments = {
-    "issues" : issues,
     "currentissue" : currentissue,
-    "categories" : categories,
     "currentcategory" : currentcategory,
     "form" : form,
     "cancel_url" : article.url(),
@@ -78,33 +69,33 @@ def edit(request, article_id):
 
 def listing(request, category_slug, year, month):
   articles = Article.objects.all()
-  categories = Category.objects.all()
-  issues = Issue.objects.all()
 
+  # issue
+  currentissue = None
+  if month and year: # show articles from selected issue
+    currentissue = get_object_or_404(Issue, month=int(month), year=int(year))
+  else: # show articles from newest issue
+    currentissue = Issue.objects.all()[0]
+  if not currentissue.published and not request.user.is_superuser:
+    raise PermissionDenied
+  articles = articles.filter(issue=currentissue)
+
+  # category
   currentcategory = None
-  if not category_slug:
+  if not category_slug: # show featured articles
     articles = articles.filter(featured=True)
-  else:
-    for category in categories:
+  else: # show category articles
+    for category in Category.objects.all():
       if category.slug() == category_slug:
         currentcategory = category
     if not currentcategory:
       raise Http404
     articles = articles.filter(category=currentcategory)
 
-  currentissue = None
-  if month and year:
-    currentissue = get_object_or_404(Issue, month=int(month), year=int(year))
-  else:
-    currentissue = Issue.objects.all()[0]
-  articles = articles.filter(issue=currentissue)
-        
-  left_articles, right_articles = [ articles[i::2] for i in xrange(2) ]  
+  left_articles, right_articles = [ articles[i::2] for i in xrange(2) ]
   templatearguments = {
     "left_articles" : left_articles,
     "right_articles" : right_articles,
-    "categories" : categories,
-    "issues" : issues,
     "currentcategory" : currentcategory,
     "currentissue" : currentissue,
   }
@@ -112,14 +103,12 @@ def listing(request, category_slug, year, month):
 
 def display(request, article_id):
   article = get_object_or_404(Article, id=article_id)
-  categories = Category.objects.all()
-  issues = Issue.objects.all()
   currentissue = article.issue
   currentcategory = article.category
+  if not currentissue.published and not request.user.is_superuser:
+    raise PermissionDenied
   templatearguments = {
     "article" : article,
-    "categories" : categories,
-    "issues" : issues,
     "currentcategory" : currentcategory,
     "currentissue" : currentissue,
   }

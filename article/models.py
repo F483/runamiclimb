@@ -14,8 +14,7 @@ class Article(models.Model):
   featured = models.BooleanField(default=False)
   category = models.ForeignKey("article.Category", related_name="articles", null=True)
   issue = models.ForeignKey("article.Issue", related_name="articles", null=True)
-
-  email = models.EmailField(max_length=1024) # TODO get from author user object
+  email = models.EmailField(max_length=1024)
 
   def url(self):
     title_slug = slugify(unidecode(self.title))
@@ -50,6 +49,7 @@ class Issue(models.Model):
 
   month = models.IntegerField()
   year = models.IntegerField()
+  published = models.BooleanField(default=False)
 
   def __unicode__(self):
     months = [
@@ -66,6 +66,8 @@ class Issue(models.Model):
         "November",
         "December"
     ]
+    if not self.published:
+      return "%s %i (unpublished)" % (months[self.month -1], self.year)
     return "%s %i" % (months[self.month -1], self.year)
 
   class Meta:
