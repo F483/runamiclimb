@@ -26,7 +26,8 @@ class Article(models.Model):
   gallery = models.ForeignKey(
       "photologue.Gallery", 
       related_name="articles", 
-      null=True
+      null=True,
+      blank=True
   )
 
   def url(self):
