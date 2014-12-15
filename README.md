@@ -7,7 +7,7 @@ Trainless is made with python/django.
 ### Dependencies for ubuntu
 
     # install apt packages
-    sudo apt-get -qy install gettext libjpeg-dev
+    sudo apt-get -qy install gettext libjpeg-dev libfreetype6-dev
 
 ### Project Setup
 
@@ -21,7 +21,7 @@ Trainless is made with python/django.
     source env/bin/activate             # activate virtualenv
 
     # Install python packages
-    python setup.py develop
+    pip install --upgrade -r packages.txt
 
     # Setup development database
     python manage.py syncdb

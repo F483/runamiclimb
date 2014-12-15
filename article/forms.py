@@ -1,6 +1,7 @@
 from django import forms
 from article.models import Issue
 from article.models import Category
+from captcha.fields import CaptchaField
 
 
 class Submit(forms.Form):
@@ -29,6 +30,8 @@ class Submit(forms.Form):
       label="Article",
       widget=forms.Textarea(attrs={'rows' : '10'})
   )
+
+  captcha = CaptchaField()
 
 
 class Edit(forms.Form):

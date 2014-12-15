@@ -22,25 +22,26 @@ def submit(request):
       article.content = form.cleaned_data["content"]
       article.coverletter = form.cleaned_data["coverletter"]
       article.save()
-      return HttpResponseRedirect("/")
+      return HttpResponseRedirect("/article/submitted.html")
   else: # "GET"
     form = forms.Submit()
 
   templatearguments = {
     "form" : form,
-    "cancel_url" : "/",
-    "title" : "Submit Article",
-    "currentissue" : Issue.objects.all()[0],
+    "form_info" : "test",
+    "form_cancel_url" : "/",
+    "form_title" : "Submit Article",
   }
   return render(request, 'article/submit.html', templatearguments)
+
+def submitted(request):
+  return render(request, 'article/submitted.html', {})
 
 def edit(request, article_id):
   if not request.user.is_superuser:
     raise PermissionDenied
 
   article = get_object_or_404(Article, id=article_id)
-  currentissue = article.issue and article.issue or Issue.objects.all()[0]
-  currentcategory = article.category and article.category or None
 
   if request.method == "POST":
     form = forms.Edit(request.POST, article=article)
@@ -59,11 +60,9 @@ def edit(request, article_id):
     form = forms.Edit(article=article)
 
   templatearguments = {
-    "currentissue" : currentissue,
-    "currentcategory" : currentcategory,
     "form" : form,
-    "cancel_url" : article.url(),
-    "title" : "Edit Article",
+    "form_cancel_url" : article.url(),
+    "form_title" : "Edit Article",
   }
   return render(request, 'article/submit.html', templatearguments)
 

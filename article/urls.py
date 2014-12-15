@@ -36,4 +36,7 @@ urlpatterns = patterns('article.views',
   # submit article view
   url(r"^article/submit.html$", "submit"),
 
+  # article submited
+  url(r"^article/submitted.html$", "submitted"),
+
 )

@@ -1,0 +1,42 @@
+{% load bootstrap %}
+
+<div class="well">
+
+  <form method="POST" class="form" role="form"
+        action="{{ request.get_full_path }}">
+
+    {% csrf_token %}
+
+    <fieldset>
+
+      {##### TITLE #####}
+      <legend>{{form_title}}</legend>
+
+      {##### INFO #####}
+      {% if form_info %}
+        <div class="alert alert-dismissable alert-info">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ form_info }}
+        </div>
+      {% endif %}
+
+      {##### RENDER FORM #####}
+      {{ form|bootstrap }}
+
+      {##### CANCEL AND SUBMIT BUTTONS #####}
+      <div class="form-group">
+        {% if form_cancel_url %}
+          <button type="button" class="btn btn-default"
+                  onclick="window.location.href = '{{ form_cancel_url }}';">
+            Cancel
+          </button>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+
+    </fieldset>
+  </form>
+
+</div>

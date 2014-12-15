@@ -41,6 +41,10 @@ INSTALLED_APPS = (
     'article',
 
     'bootstrapform',
+    'captcha',
+
+    'debug_toolbar.apps.DebugToolbarConfig', # Django 1.7.x or later
+    #'debug_toolbar', # Django 1.6.x or earlier
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,3 +109,12 @@ BOOTSWATCH_THEME = "journal"
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = '/media/'

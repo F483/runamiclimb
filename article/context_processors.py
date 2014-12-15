@@ -13,7 +13,8 @@ def add_issues(request):
   issues = Issue.objects.all()
   if not request.user.is_superuser:
     issues = issues.filter(published=True)
-  return { 'issues': issues }
+  currentissue = len(issues) and issues[0] or None
+  return { 'issues': issues, 'currentissue': currentissue }
 
 def add_categories(request):
   return { 'categories': Category.objects.all() }
