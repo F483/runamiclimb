@@ -124,3 +124,12 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = '/media/'
 
 SITE_ID = 1
+
+
+##### LOCAL SETTINGS #####
+
+try:
+  from config.local_settings import *
+except ImportError:
+  pass
+
