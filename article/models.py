@@ -12,9 +12,22 @@ class Article(models.Model):
   content = models.TextField()
   coverletter = models.TextField()
   featured = models.BooleanField(default=False)
-  category = models.ForeignKey("article.Category", related_name="articles", null=True)
-  issue = models.ForeignKey("article.Issue", related_name="articles", null=True)
   email = models.EmailField(max_length=1024)
+  category = models.ForeignKey(
+      "article.Category", 
+      related_name="articles", 
+      null=True
+  )
+  issue = models.ForeignKey(
+      "article.Issue", 
+      related_name="articles", 
+      null=True
+  )
+  gallery = models.ForeignKey(
+      "photologue.Gallery", 
+      related_name="articles", 
+      null=True
+  )
 
   def url(self):
     title_slug = slugify(unidecode(self.title))

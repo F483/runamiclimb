@@ -1,4 +1,4 @@
-{% extends "article/base.html" %}
+{% extends "base.html" %}
 {% load article_tags %}
 
 {% block content %}
@@ -7,6 +7,9 @@
   <p>
     By {{ article.author }} <br>
     {{ article.issue }}
+    {% if user.is_superuser and article.gallery %}
+       <br><a href="{{ article.gallery.get_absolute_url }}">Article gallery</a>         
+    {% endif %}
   </p>
 
   <p> <hr> </p>

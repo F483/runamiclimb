@@ -74,8 +74,9 @@ def listing(request, category_slug, year, month):
   if month and year: # show articles from selected issue
     currentissue = get_object_or_404(Issue, month=int(month), year=int(year))
   else: # show articles from newest issue
-    currentissue = Issue.objects.all()[0]
-  if not currentissue.published and not request.user.is_superuser:
+    issues = Issue.objects.all()
+    currentissue = issues and issue[0] or None
+  if currentissue and not currentissue.published and not request.user.is_superuser:
     raise PermissionDenied
   articles = articles.filter(issue=currentissue)
 

@@ -31,20 +31,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
+    # our apps
     'article',
 
+    # third party apps
     'bootstrapform',
     'captcha',
-
-    'debug_toolbar.apps.DebugToolbarConfig', # Django 1.7.x or later
-    #'debug_toolbar', # Django 1.6.x or earlier
+    'photologue',
+    'sortedm2m',
+    'debug_toolbar.apps.DebugToolbarConfig',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,3 +122,5 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/media/'
+
+SITE_ID = 1
