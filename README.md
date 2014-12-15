@@ -1,10 +1,8 @@
-# runamiclimb
-
-A website for bike sharing.
+# Trainless
 
 # Installation for development
 
-runamiclimb is made with python/django.
+Trainless is made with python/django.
 
 ### Dependencies for ubuntu
 
@@ -15,8 +13,8 @@ runamiclimb is made with python/django.
 
     # Clone repository
     cd where/you/keep/your/repos
-    git clone https://github.com/F483/runamiclimb
-    cd runamiclimb
+    git clone https://github.com/F483/trainless
+    cd trainless
 
     # python virtualenv
     virtualenv -p /usr/bin/python2 env  # create virtualenv

@@ -1,5 +1,5 @@
 """
-Django settings for runamiclimb project.
+Django settings for trainless project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -59,7 +59,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   "django.core.context_processors.i18n",
   "django.core.context_processors.media",
   "django.core.context_processors.static",
-# TODO what does it do, needed?    "django.core.context_processors.tz",
   "django.core.context_processors.request",
   "django.contrib.messages.context_processors.messages",
 
@@ -68,9 +67,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   "article.context_processors.add_categories",
 )
 
-ROOT_URLCONF = 'runamiclimb.urls'
+ROOT_URLCONF = 'config.urls'
 
-WSGI_APPLICATION = 'runamiclimb.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
