@@ -5,7 +5,7 @@
 
   <h1>{{ article.title }}</h1>
   <p>
-    By {{ article.author }} <br>
+    {{ article.author }} <br>
     {{ article.issue }}
     {% if user.is_superuser and article.gallery %}
        <br><a href="{{ article.gallery.get_absolute_url }}">Article gallery</a>         
