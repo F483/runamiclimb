@@ -7,9 +7,11 @@
   <p> 
     {% if article.gallery and article.gallery.photos.first %}
       {% with article.gallery.photos.first as photo %}
-        <img src="{{ photo.get_thumbnail_url }}"
-             class="preview_photo" 
-             alt="{{ photo.title }}" align="left">
+        <a href="{{article.url}}">
+          <img src="{{ photo.get_thumbnail_url }}"
+               class="preview_photo" 
+               alt="{{ photo.title }}" align="left">
+        </a>
       {% endwith %}
     {% endif %}
 

@@ -1,15 +1,25 @@
 
-<div class="container">
-  <a href="/"><h1>TRAINLESS</h1></a>
+<div class="container titlebar_title">
+  <a href="/"><h1 class="">TRAINLESS</h1></a>
 </div>
 
 <div class="container">
-  <table style="width: 100%; height: {{ titlebar_photo_size.height}}px;">
+  <table style="width: 100%; height: {{ titlebar_photo_size.height }}px;">
     <tr>
       {% for photo in titlebar_photos %}
-        <td class="titlebar_photo" style="background-image: url({{ photo.get_titlebar_photo_url }});"></td>
+        {% with photo.get_titlebar_photo_url as url %}
+          <td class="titlebar_photo" style="background-image: url({{ url }});">
+          </td>
+        {% endwith %}
       {% endfor %}
     </tr>
   </table>
 </div>
 
+<p></p>
+
+<div class="container">
+  {% include "article/categories.html" %}
+</div>
+
+<p></p>

@@ -1,7 +1,14 @@
 
-.preview_photo {
-  margin-right: 5px;
-  margin-top: 5px;
+.titlebar_title {
+  background-image: url(/static/article/anja.png);
+  background-repeat: no-repeat;
+  background-position-y: 21px;
+  background-position-x: 15px;
+}
+
+.titlebar_title h1 {
+  font-size: 65px;
+  margin-left: 55px;
 }
 
 .titlebar_photo {
@@ -9,6 +16,11 @@
   background-position: top;
   background-repeat: no-repeat;
   /*background-size: 100% auto;*/
+}
+
+.preview_photo {
+  margin-right: 5px;
+  margin-top: 5px;
 }
 
 body {
