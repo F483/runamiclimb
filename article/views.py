@@ -10,6 +10,44 @@ from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
+
+SUBMISSION_GUIDLINES = """
+#### Submission Guidlines
+
+Thank you for submitting to Trainless Magazine. We look forward to reading
+your work.
+
+We accept nonfiction and fiction writing. Please read through our magazine to
+familiarize yourself with what kind of work we publish. Nonfiction articles
+should stay relevant to our magazine's theme of travel, athleticism, and
+culture. Fiction is much more open, as every world created through fiction
+presents a new "culture." 
+
+Stories ranging from 100-3,000 words are accepted. It would have to be an
+incredible, really unstoppable story to keep our readers reading after 3,000
+words. 
+
+In regards to format, words that are italicized should have this symbol * at
+the start and end of the italicized word or phrase. Bold letters should be
+typed in all capital letters.
+
+In terms of style, excessive profanity, violence, and erotica will not be
+accepted.
+
+Poetry is, at this time, not accepted.
+
+Please send a maximum of two submissions to be considered per issue. We print
+between 10 and 15 articles a month, depending on length, and only one article
+or story per author per issue. 
+
+Please allow two to four weeks response time.
+
+Relevant photographs will be requested upon acceptance of the article or story.
+
+Simultaneous articles are accepted. We ask that you tell us as soon as your
+work is accepted elsewhere.
+"""
+
 def submit(request):
 
   if request.method == "POST":
@@ -28,7 +66,7 @@ def submit(request):
 
   templatearguments = {
     "form" : form,
-    "form_info" : "test",
+    "form_info" : SUBMISSION_GUIDLINES,
     "form_cancel_url" : "/",
     "form_title" : "Submit Article",
   }
