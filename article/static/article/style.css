@@ -4,3 +4,14 @@
   margin-top: 5px;
 }
 
+.titlebar_photo {
+  height: 100%; 
+  background-position: top;
+  background-repeat: no-repeat;
+  /*background-size: 100% auto;*/
+}
+
+body {
+  padding-top: 0px;
+}
+

@@ -73,6 +73,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   "article.context_processors.add_settings",
   "article.context_processors.add_issues",
   "article.context_processors.add_categories",
+  "article.context_processors.add_titlebar_photos",
 )
 
 ROOT_URLCONF = 'config.urls'

@@ -2,7 +2,6 @@ from unidecode import unidecode
 from django.db import models
 from django.template.defaultfilters import slugify
 
-# Create your models here.
 
 class Article(models.Model):
 
