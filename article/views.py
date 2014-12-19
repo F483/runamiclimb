@@ -152,3 +152,6 @@ def display(request, article_id):
   }
   return render(request, 'article/display.html', templatearguments)
 
+def contact(request):
+  return render(request, 'article/contact.html', {})
+
