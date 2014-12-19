@@ -1,21 +1,19 @@
 {% load article_tags %}
 
-<div class="panel panel-default panel-body">
+<div class="panel panel-default panel-body article_preview">
 
   <a href="{{article.url}}"><h3>{{ article.title }}</h3></a>
 
-  <p> 
+  <p>
     {% if article.gallery and article.gallery.photos.first %}
       {% with article.gallery.photos.first as photo %}
         <a href="{{article.url}}">
-          <img src="{{ photo.get_thumbnail_url }}"
-               class="preview_photo" 
-               alt="{{ photo.title }}" align="left">
+          <img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}">
         </a>
       {% endwith %}
     {% endif %}
 
-    {{ article.preview|render_markdown }} 
+    {{ article.preview|render_markdown }}
   </p>
 
   <p><a href="{{article.url}}"><b>Read full article</b></a></p>

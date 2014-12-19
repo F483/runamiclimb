@@ -1,4 +1,12 @@
 
+/***** Global *****/
+
+body {
+  padding-top: 0px;
+}
+
+/***** Titlebar *****/
+
 .titlebar_title {
   background-image: url(/static/anja-logo.png);
   background-repeat: no-repeat;
@@ -18,12 +26,26 @@
   /*background-size: 100% auto;*/
 }
 
-.preview_photo {
+
+/***** Article Preview *****/
+
+.article_preview {
+}
+
+.article_preview img {
+  float: left;
   margin-right: 5px;
   margin-top: 5px;
 }
 
-body {
-  padding-top: 0px;
+/***** Article Display *****/
+
+.article_display {
+}
+
+.article_display img {
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
 }
 
