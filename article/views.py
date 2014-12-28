@@ -152,7 +152,7 @@ def display(request, article_id):
     if form.is_valid():
       amount = form.cleaned_data["amount"]
       ratio = form.cleaned_data["ratio"] / Decimal("100.0")
-      url = "/article/support/%s/%.2f/%.2f/%s.html" % (
+      url = "/support/%s/%.2f/%.2f/%s.html" % (
           article.id, amount, ratio, article.title_slug()
       )
       return HttpResponseRedirect(url)
