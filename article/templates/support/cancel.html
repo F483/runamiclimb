@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  TODO cancel page with link back to article
+  <h3>Your contribution has been cancelled.</h3>
+  <p>
+    There will be no change in your account. Thank you for reading Trainless Magazine!
+  </p>
+
+  <a href="{{ article.url }}" class="btn btn-success">Return to the article</a>
 {% endblock %}
