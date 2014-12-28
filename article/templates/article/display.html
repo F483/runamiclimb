@@ -2,7 +2,6 @@
 {% load article_tags %}
 
 {% block content %}
-  <div class="article_display">
 
     <h1>{{ article.title }}</h1>
     <p>
@@ -12,13 +11,19 @@
 
     <p> <hr> </p>
 
-    <p> {{ article.content|render_markdown }} </p>
+    <div class="article_display">
+      <p> {{ article.content|render_markdown }} </p>
+    </div>
 
     <hr>
 
-    <p> {{ article.coverletter|render_markdown }} </p>
+    <div class="coverletter_display">
+      <p> {{ article.coverletter|render_markdown }} </p>
+    </div>
 
-    {% include "site/form.html" %}
+    <div>
+      {% include "site/form.html" %}
+    </div>
 
     <p>
       {% if user.is_superuser %}
@@ -26,5 +31,4 @@
       {% endif %}
     </p>
 
-  </div>
 {% endblock %} 

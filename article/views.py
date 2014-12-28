@@ -186,7 +186,7 @@ def support(request, article_id, amount, ratio):
     raise PermissionDenied
 
   item_name = "%i_%f_%f_%s" % (article.id, amount, ratio, article.title_slug())
-  url_prefix = "http://trainlessmagazine.com/article/support"
+  url_prefix = "http://www.trainlessmagazine.com/support"
   return_url = "%s/thanks/%s/%s.html" % (
       url_prefix, article.id, article.title_slug()
   )
@@ -198,7 +198,7 @@ def support(request, article_id, amount, ratio):
       "amount": amount,
       "item_name": item_name,
       "invoice": str(uuid.uuid4()),
-      "notify_url": "http://trainlessmagazine.com" + reverse('paypal-ipn'),
+      "notify_url": "http://www.trainlessmagazine.com" + reverse('paypal-ipn'),
       "return_url": return_url,
       "cancel_return": cancel_return,
   }
