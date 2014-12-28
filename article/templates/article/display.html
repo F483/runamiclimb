@@ -8,9 +8,6 @@
     <p>
       {{ article.author }} <br>
       {{ article.issue }}
-      {% if user.is_superuser and article.gallery %}
-         <br><a href="{{ article.gallery.get_absolute_url }}">Article gallery</a>         
-      {% endif %}
     </p>
 
     <p> <hr> </p>
@@ -21,10 +18,11 @@
 
     <p> {{ article.coverletter|render_markdown }} </p>
 
+    {% include "site/form.html" %}
+
     <p>
-      <a href="/TODO" class="btn btn-success">Pay Author</a>
       {% if user.is_superuser %}
-        <a href="{{article.editurl}}" class="btn btn-primary">Edit</a>
+        <a href="{{ article.url_edit }}" class="btn btn-primary">Edit</a>
       {% endif %}
     </p>
 

@@ -1,14 +1,17 @@
 import datetime
+import uuid
+from decimal import Decimal
 from django.shortcuts import render
 from django.http import HttpResponse
-from article.models import Article
-from article.models import Category
-from article.models import Issue
+from article.models import Article, Category, Issue
 from article import forms
 from django.shortcuts import get_object_or_404
-from django.http import Http404
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
+from paypal.standard.forms import PayPalPaymentsForm
+from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import csrf_exempt
+from config import settings
 
 
 SUBMISSION_GUIDLINES = """
@@ -70,7 +73,7 @@ def submit(request):
     "form_cancel_url" : "/",
     "form_title" : "Submit Article",
   }
-  return render(request, 'article/submit.html', templatearguments)
+  return render(request, 'site/submit.html', templatearguments)
 
 def submitted(request):
   return render(request, 'article/submitted.html', {})
@@ -102,7 +105,7 @@ def edit(request, article_id):
     "form_cancel_url" : article.url(),
     "form_title" : "Edit Article",
   }
-  return render(request, 'article/submit.html', templatearguments)
+  return render(request, 'site/submit.html', templatearguments)
 
 def listing(request, category_slug, year, month):
   articles = Article.objects.all()
@@ -141,17 +144,84 @@ def listing(request, category_slug, year, month):
 
 def display(request, article_id):
   article = get_object_or_404(Article, id=article_id)
-  currentissue = article.issue
-  currentcategory = article.category
-  if not currentissue.published and not request.user.is_superuser:
+  if not article.issue.published and not request.user.is_superuser:
     raise PermissionDenied
+
+  if request.method == "POST":
+    form = forms.Support(request.POST)
+    if form.is_valid():
+      amount = form.cleaned_data["amount"]
+      ratio = form.cleaned_data["ratio"] / Decimal("100.0")
+      url = "/article/support/%s/%.2f/%.2f/%s.html" % (
+          article.id, amount, ratio, article.title_slug()
+      )
+      return HttpResponseRedirect(url)
+  else: # "GET"
+    form = forms.Support()
+
   templatearguments = {
+    "form_title" : "Support the author",
+    "submit_label" : "Continue",
+    "submit_button_class" : "btn btn-success",
+    "form" : form,
     "article" : article,
-    "currentcategory" : currentcategory,
-    "currentissue" : currentissue,
+    "currentcategory" : article.category,
+    "currentissue" : article.issue,
   }
   return render(request, 'article/display.html', templatearguments)
 
 def contact(request):
-  return render(request, 'article/contact.html', {})
+  return render(request, 'site/contact.html', {})
+
+def support(request, article_id, amount, ratio):
+  article = get_object_or_404(Article, id=article_id)
+  if not article.issue.published and not request.user.is_superuser:
+    raise PermissionDenied
+
+  amount = Decimal(amount)
+  if amount < Decimal("0.0"):
+    raise PermissionDenied
+  ratio = Decimal(ratio)
+  if ratio < Decimal("0.0") or ratio > Decimal("100.0"):
+    raise PermissionDenied
+
+  item_name = "%i_%f_%f_%s" % (article.id, amount, ratio, article.title_slug())
+  url_prefix = "http://trainlessmagazine.com/article/support"
+  return_url = "%s/thanks/%s/%s.html" % (
+      url_prefix, article.id, article.title_slug()
+  )
+  cancel_return = "%s/cancel/%s/%s.html" % (
+      url_prefix, article.id, article.title_slug()
+  )
+  paypal_dict = {
+      "business": settings.PAYPAL_RECEIVER_EMAIL,
+      "amount": amount,
+      "item_name": item_name,
+      "invoice": str(uuid.uuid4()),
+      "notify_url": "http://trainlessmagazine.com" + reverse('paypal-ipn'),
+      "return_url": return_url,
+      "cancel_return": cancel_return,
+  }
+  templatearguments = { 
+      "amount" : amount,
+      "ratio" : ratio * 100,
+      "article" : article,
+      "author_share" : amount * ratio,
+      "form": PayPalPaymentsForm(initial=paypal_dict, button_type="donate"),
+      "currentcategory" : article.category,
+      "currentissue" : article.issue,
+  }
+  return render(request, "support/support.html", templatearguments)
+
+@csrf_exempt # for paypal
+def paypal_return(request, article_id, template):
+  article = get_object_or_404(Article, id=article_id)
+  if not article.issue.published and not request.user.is_superuser:
+    raise PermissionDenied
+  templatearguments = {
+    "article" : article,
+    "currentcategory" : article.category,
+    "currentissue" : article.issue,
+  }
+  return render(request, template, templatearguments)
 

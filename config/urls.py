@@ -7,8 +7,10 @@ urlpatterns = patterns('',
   url(r'^admin/', include(admin.site.urls)),
   url(r'^captcha/', include('captcha.urls')),
   url(r'^photologue/', include('photologue.urls', namespace='photologue')),
+  url(r'^paypal/', include('paypal.standard.ipn.urls')),
   url(r"^", include("article.urls")),
 )
 
 if settings.DEBUG:                                                                                              
   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

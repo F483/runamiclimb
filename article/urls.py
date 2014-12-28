@@ -4,6 +4,8 @@ article_id = r"(?P<article_id>[0-9]+)"
 year = r"(?P<year>[0-9]+)"
 month = r"(?P<month>[0-9]+)"
 category_slug = r"(?P<category_slug>[a-z0-9\-]+)"
+amount = r"(?P<amount>[0-9]+\.[0-9]+)"
+ratio = r"(?P<ratio>[0-9]+\.[0-9]+)"
 
 urlpatterns = patterns('article.views',
   
@@ -11,7 +13,7 @@ urlpatterns = patterns('article.views',
   url(
     r"^$", 
     "listing",
-    { 'year' : None, 'month' : None, 'category_slug' : None}
+    { 'year' : None, 'month' : None, 'category_slug' : None }
   ),
 
   # issue view
@@ -33,6 +35,8 @@ urlpatterns = patterns('article.views',
   # edit article view
   url(r"^article/edit/%s/[a-z0-9\-]+\.html$" % article_id, "edit"),
 
+  ##### TODO move to site app
+
   # submit article view
   url(r"^article/submit.html$", "submit"),
 
@@ -41,5 +45,23 @@ urlpatterns = patterns('article.views',
 
   # submit article view
   url(r"^article/contact.html$", "contact"),
+
+  ##### TODO move to support app
+  url(
+    r"^support/%s/%s/%s/[a-z0-9\-]+\.html$" % (
+      article_id, amount, ratio
+    ), 
+    "support"
+  ),
+  url(
+    r"^support/thanks/%s/[a-z0-9\-]+\.html$" % article_id, 
+    "paypal_return",
+    { 'template' : "support/thanks.html"}
+  ),
+  url(
+    r"^support/cancel/%s/[a-z0-9\-]+\.html$" % article_id, 
+    "paypal_return",
+    { 'template' : "support/cancel.html"}
+  ),
 
 )

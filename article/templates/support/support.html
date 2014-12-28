@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load article_tags %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-6 well">
+
+      <h3>Support the author</h3>
+
+      <p>
+        Total amount: {{ amount|floatformat:2|intcomma }}USD<br>
+        Authors share: {{ author_share|floatformat:2|intcomma }}USD ({{ ratio|floatformat:2|intcomma }}%)
+      </p>
+
+      {{ form.render }}
+
+    </div>
+    <div class="col-sm-6">
+
+      <div class="panel panel-default panel-body article_preview">
+
+        <a href="{{article.url}}"><h3>{{ article.title }}</h3></a>
+        <p> {{ article.author }} </p>
+
+        <p>
+          {% if article.gallery and article.gallery.photos.first %}
+            {% with article.gallery.photos.first as photo %}
+              <a href="{{article.url}}">
+                <img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}">
+              </a>
+            {% endwith %}
+          {% endif %}
+
+          {{ article.preview|render_markdown }}
+        </p>
+
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %} 

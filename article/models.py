@@ -29,13 +29,18 @@ class Article(models.Model):
       blank=True
   )
 
-  def url(self):
-    title_slug = slugify(unidecode(self.title))
-    return "/article/%s/%s.html" % (self.id, title_slug)
+  def title_slug(self):
+    return slugify(unidecode(self.title))
 
-  def editurl(self):
+  def url(self):
+    return "/article/%s/%s.html" % (self.id, self.title_slug())
+
+  def url_edit(self):
+    return "/article/edit/%s/%s.html" % (self.id, self.title_slug())
+
+  def url_support(self):
     title_slug = slugify(unidecode(self.title))
-    return "/article/edit/%s/%s.html" % (self.id, title_slug)
+    return "/article/support/%s/%s.html" % (self.id, title_slug)
 
   def __unicode__(self):
     if not self.issue and not self.category:

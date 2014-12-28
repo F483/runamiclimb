@@ -32,8 +32,18 @@
             Cancel
           </button>
         {% endif %}
-        <button type="submit" class="btn btn-primary">
-          Submit
+        <button type="submit"
+          {% if submit_button_class %}
+                class="{{ submit_button_class }}"
+          {% else %}
+                class="btn btn-primary"
+          {% endif %}
+        >
+          {% if submit_label %}
+            {{ submit_label }}
+          {% else %}
+            Submit
+          {% endif %}
         </button>
       </div>
 

@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 
     # our apps
     'article',
@@ -48,6 +49,7 @@ INSTALLED_APPS = (
     'captcha',
     'photologue',
     'sortedm2m',
+    'paypal.standard.ipn',
     'debug_toolbar.apps.DebugToolbarConfig',
 )
 
@@ -126,6 +128,9 @@ MEDIA_URL = '/media/'
 
 SITE_ID = 1
 
+# Paypal
+PAYPAL_RECEIVER_EMAIL = "yourpaypalemail@example.com"
+PAYPAL_TEST = True
 
 ##### LOCAL SETTINGS #####
 
