@@ -6,29 +6,28 @@ from captcha.fields import CaptchaField
 
 class Submit(forms.Form):
 
+  # Article content
   title = forms.CharField(
       label="Title",
       help_text="Title of the article"
   )
+  content = forms.CharField(
+      label="Article",
+      widget=forms.Textarea(attrs={'rows' : '10'})
+  )
 
+  # Author info
   author = forms.CharField(
       label="Author",
       help_text="Author's name"
   )
-
+  email = forms.EmailField(
+      label="Email"
+  )
   coverletter = forms.CharField(
       label="Cover Letter",
       help_text="Author bio and previous publications",
       widget=forms.Textarea(attrs={'rows' : '5'})
-  )
-
-  email = forms.EmailField(
-      label="Email"
-  )
-
-  content = forms.CharField(
-      label="Article",
-      widget=forms.Textarea(attrs={'rows' : '10'})
   )
 
   captcha = CaptchaField()
@@ -36,37 +35,11 @@ class Submit(forms.Form):
 
 class Edit(forms.Form):
 
+  # Article content
   title = forms.CharField(
       label="Title",
       help_text="Title of the article."
   )
-
-  author = forms.CharField(
-      label="Author",
-      help_text="The name that will be displayed as the author."
-  )
-
-  issue = forms.ModelChoiceField(
-      label="Issue",
-      queryset=Issue.objects.all()
-  )
-
-  category = forms.ModelChoiceField(
-      label="Category",
-      queryset=Category.objects.all()
-  )
-
-  featured = forms.BooleanField(label="Featured", required=False)
-
-  coverletter = forms.CharField(
-      label="Cover Letter",
-      help_text="Author bio and previous publications",
-      widget=forms.Textarea(attrs={
-          'class' : 'pagedownBootstrap',
-          'rows' : '5'
-      })
-  )
-
   preview = forms.CharField(
       label="Preview",
       help_text="The article preview.",
@@ -75,7 +48,6 @@ class Edit(forms.Form):
           'rows' : '5'
       })
   )
-
   content = forms.CharField(
       label="Content",
       help_text="The article text.",
@@ -83,6 +55,39 @@ class Edit(forms.Form):
           'class' : 'pagedownBootstrap',
           'rows' : '10'
       })
+  )
+
+  # Author info
+  author = forms.CharField(
+      label="Author",
+      help_text="The name that will be displayed as the author."
+  )
+  coverletter = forms.CharField(
+      label="Cover Letter",
+      help_text="Author bio and previous publications",
+      widget=forms.Textarea(attrs={
+          'class' : 'pagedownBootstrap',
+          'rows' : '5'
+      })
+  )
+
+  # Publishing info
+  issue = forms.ModelChoiceField(
+      label="Issue",
+      queryset=Issue.objects.all()
+  )
+  category = forms.ModelChoiceField(
+      label="Category",
+      queryset=Category.objects.all()
+  )
+  ordering_category = forms.IntegerField(
+      label="Category ordering position",
+      initial=0
+  )
+  featured = forms.BooleanField(label="Featured", required=False)
+  ordering_featured = forms.IntegerField(
+      label="Featured ordering position",
+      initial=0
   )
 
   def __init__(self, *args, **kwargs):
@@ -95,5 +100,7 @@ class Edit(forms.Form):
     self.fields["content"].initial = article.content
     self.fields["issue"].initial = article.issue
     self.fields["category"].initial = article.category
+    self.fields["ordering_category"].initial = article.ordering_category
     self.fields["featured"].initial = article.featured
+    self.fields["ordering_featured"].initial = article.ordering_featured
 

@@ -1,6 +1,5 @@
 from django import forms
 
-
 class Support(forms.Form):
 
   amount = forms.DecimalField(
@@ -14,5 +13,4 @@ class Support(forms.Form):
       max_value=100.0,
       min_value=0.0
   )
-
 

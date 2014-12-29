@@ -1,17 +1,27 @@
 from django.contrib import admin
-
-# Register your models here.
-
-from article.models import Article
-
-admin.site.register(Article)
+from article.models import Article, Category, Issue
 
 
-from article.models import Category
+class ArticleAdmin(admin.ModelAdmin):
 
+  list_display = (
+    'title', 'author', 'email',
+    'issue', 'category', 'ordering_category',
+    'featured', 'ordering_featured'
+  )
+  fieldsets = [
+    ('Article content', {'fields': ['title', 'preview', 'content', 'gallery']}),
+    ('Author info',     {'fields': ['author', 'email', 'coverletter']}),
+    ('Publishing info', {
+      'fields': [
+        'issue',
+        'category', 'ordering_category',
+        'featured', 'ordering_featured'
+      ]
+    }),
+  ]
+
+
+admin.site.register(Article, ArticleAdmin)
 admin.site.register(Category)
-
-
-from article.models import Issue
-
 admin.site.register(Issue)

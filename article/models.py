@@ -5,29 +5,36 @@ from django.template.defaultfilters import slugify
 
 class Article(models.Model):
 
-  author = models.CharField(max_length=1024)
+  # Article content
   title = models.CharField(max_length=1024)
   preview = models.TextField()
   content = models.TextField()
-  coverletter = models.TextField()
-  featured = models.BooleanField(default=False)
-  email = models.EmailField(max_length=1024)
-  category = models.ForeignKey(
-      "article.Category", 
-      related_name="articles", 
-      null=True
-  )
-  issue = models.ForeignKey(
-      "article.Issue", 
-      related_name="articles", 
-      null=True
-  )
   gallery = models.ForeignKey(
-      "photologue.Gallery", 
-      related_name="articles", 
+      "photologue.Gallery",
+      related_name="articles",
       null=True,
       blank=True
   )
+
+  # Author info
+  author = models.CharField(max_length=1024)
+  email = models.EmailField(max_length=1024)
+  coverletter = models.TextField()
+
+  # Publishing info
+  issue = models.ForeignKey(
+      "article.Issue",
+      related_name="articles",
+      null=True
+  )
+  category = models.ForeignKey(
+      "article.Category",
+      related_name="articles",
+      null=True
+  )
+  ordering_category = models.IntegerField(default=0)
+  ordering_featured = models.IntegerField(default=0)
+  featured = models.BooleanField(default=False)
 
   def title_slug(self):
     return slugify(unidecode(self.title))

@@ -73,7 +73,7 @@ def submit(request):
     "form_cancel_url" : "/",
     "form_title" : "Submit Article",
   }
-  return render(request, 'site/submit.html', templatearguments)
+  return render(request, 'common/submit.html', templatearguments)
 
 def submitted(request):
   return render(request, 'article/submitted.html', {})
@@ -94,7 +94,9 @@ def edit(request, article_id):
       article.coverletter = form.cleaned_data["coverletter"]
       article.issue = form.cleaned_data["issue"]
       article.category = form.cleaned_data["category"]
+      article.ordering_category = form.cleaned_data["ordering_category"]
       article.featured = form.cleaned_data["featured"]
+      article.ordering_featured = form.cleaned_data["ordering_featured"]
       article.save()
       return HttpResponseRedirect(article.url())
   else: # "GET"
@@ -105,7 +107,7 @@ def edit(request, article_id):
     "form_cancel_url" : article.url(),
     "form_title" : "Edit Article",
   }
-  return render(request, 'site/submit.html', templatearguments)
+  return render(request, 'common/submit.html', templatearguments)
 
 def listing(request, category_slug, year, month):
   articles = Article.objects.all()
@@ -125,6 +127,7 @@ def listing(request, category_slug, year, month):
   currentcategory = None
   if not category_slug: # show featured articles
     articles = articles.filter(featured=True)
+    articles = articles.order_by('ordering_featured')
   else: # show category articles
     for category in Category.objects.all():
       if category.slug() == category_slug:
@@ -132,11 +135,13 @@ def listing(request, category_slug, year, month):
     if not currentcategory:
       raise Http404
     articles = articles.filter(category=currentcategory)
-
-  left_articles, right_articles = [ articles[i::2] for i in xrange(2) ]
+    articles = articles.order_by('ordering_category')
+  
+  middle = len(articles) / 2
+  middle = (len(articles) % 2 != 0) and (middle + 1) or middle
   templatearguments = {
-    "left_articles" : left_articles,
-    "right_articles" : right_articles,
+    "left_articles" : articles[:middle],
+    "right_articles" : articles[middle:],
     "currentcategory" : currentcategory,
     "currentissue" : currentissue,
   }
@@ -171,5 +176,5 @@ def display(request, article_id):
   return render(request, 'article/display.html', templatearguments)
 
 def contact(request):
-  return render(request, 'site/contact.html', {})
+  return render(request, 'common/contact.html', {})
 
