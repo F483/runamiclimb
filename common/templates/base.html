@@ -26,12 +26,12 @@
     <link href="/static/Font-Awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css" rel="stylesheet">
 
-    {##### ARTICLE STYLE #####}
-    <link href="/static/article/style.css" rel="stylesheet">
+    {##### TRAINLESS STYLE #####}
+    <link href="/static/trainless.css" rel="stylesheet">
   </head>
 
   <body>
-    {% include "site/titlebar.html" %}
+    {% include "common/titlebar.html" %}
 
     <div class="container">
       <div class="row">
@@ -42,12 +42,12 @@
         </div>
 
         <div class="col-sm-3">
-          {% include "site/sidebar.html" %}
+          {% include "common/sidebar.html" %}
         </div>
       </div>
     </div>
 
-    {% include "site/footer.html" %}
+    {% include "common/footer.html" %}
 
     {##### JQUERY SCRIPT #####}
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -64,6 +64,9 @@
         $("textarea.pagedownBootstrap").pagedownBootstrap();
       })();
     </script>
+
+    {##### GOOGLE ANALYTICS #####}
+    {% include "common/analytics.html" %}
 
   </body>
 

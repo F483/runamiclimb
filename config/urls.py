@@ -8,7 +8,8 @@ urlpatterns = patterns('',
   url(r'^captcha/', include('captcha.urls')),
   url(r'^photologue/', include('photologue.urls', namespace='photologue')),
   url(r'^paypal/', include('paypal.standard.ipn.urls')),
-  url(r"^", include("article.urls")),
+  url(r'^support/', include('support.urls')),
+  url(r'^', include("article.urls")),
 )
 
 if settings.DEBUG:                                                                                              

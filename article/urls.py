@@ -35,33 +35,13 @@ urlpatterns = patterns('article.views',
   # edit article view
   url(r"^article/edit/%s/[a-z0-9\-]+\.html$" % article_id, "edit"),
 
-  ##### TODO move to site app
-
   # submit article view
   url(r"^article/submit.html$", "submit"),
 
   # article submited
   url(r"^article/submitted.html$", "submitted"),
 
-  # submit article view
+  # contact page
   url(r"^article/contact.html$", "contact"),
-
-  ##### TODO move to support app
-  url(
-    r"^support/%s/%s/%s/[a-z0-9\-]+\.html$" % (
-      article_id, amount, ratio
-    ), 
-    "support"
-  ),
-  url(
-    r"^support/thanks/%s/[a-z0-9\-]+\.html$" % article_id, 
-    "paypal_return",
-    { 'template' : "support/thanks.html"}
-  ),
-  url(
-    r"^support/cancel/%s/[a-z0-9\-]+\.html$" % article_id, 
-    "paypal_return",
-    { 'template' : "support/cancel.html"}
-  ),
 
 )

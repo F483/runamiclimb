@@ -43,6 +43,8 @@ INSTALLED_APPS = (
 
     # our apps
     'article',
+    'common',
+    'support',
 
     # third party apps
     'bootstrapform',
@@ -72,10 +74,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   "django.core.context_processors.request",
   "django.contrib.messages.context_processors.messages",
 
-  "article.context_processors.add_settings",
+  "common.context_processors.add_settings",
+  "common.context_processors.add_titlebar_photos",
   "article.context_processors.add_issues",
   "article.context_processors.add_categories",
-  "article.context_processors.add_titlebar_photos",
 )
 
 ROOT_URLCONF = 'config.urls'
