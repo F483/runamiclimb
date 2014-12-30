@@ -13,8 +13,8 @@ Trainless is made with python/django.
 
     # Clone repository
     cd where/you/keep/your/repos
-    git clone https://github.com/F483/trainless
-    cd trainless
+    git clone https://github.com/F483/trainlessmagazine.com
+    cd trainlessmagazine.com
 
     # python virtualenv
     virtualenv -p /usr/bin/python2 env  # create virtualenv

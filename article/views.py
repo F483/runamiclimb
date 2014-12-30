@@ -2,16 +2,19 @@ import datetime
 import uuid
 from decimal import Decimal
 from django.shortcuts import render
-from article.models import Article, Category, Issue
-from article import forms
-from support.forms import Support
 from django.shortcuts import get_object_or_404
 from django.http import Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from paypal.standard.forms import PayPalPaymentsForm
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
 from config import settings
+from support.forms import Support
+from article.models import Article, Category, Issue
+from article import forms
+from comment import forms as comment_forms
+from comment import models as comment_models
 
 
 SUBMISSION_GUIDLINES = """
@@ -24,11 +27,11 @@ We accept nonfiction and fiction writing. Please read through our magazine to
 familiarize yourself with what kind of work we publish. Nonfiction articles
 should stay relevant to our magazine's theme of travel, athleticism, and
 culture. Fiction is much more open, as every world created through fiction
-presents a new "culture." 
+presents a new "culture."
 
 Stories ranging from 100-3,000 words are accepted. It would have to be an
 incredible, really unstoppable story to keep our readers reading after 3,000
-words. 
+words.
 
 In regards to format, words that are italicized should have this symbol * at
 the start and end of the italicized word or phrase. Bold letters should be
@@ -41,7 +44,7 @@ Poetry is, at this time, not accepted.
 
 Please send a maximum of two submissions to be considered per issue. We print
 between 10 and 15 articles a month, depending on length, and only one article
-or story per author per issue. 
+or story per author per issue.
 
 Please allow two to four weeks response time.
 
@@ -68,16 +71,16 @@ def submit(request):
     form = forms.Submit()
 
   templatearguments = {
-    "form" : form,
-    "form_info" : SUBMISSION_GUIDLINES,
-    "form_cancel_url" : "/",
-    "form_title" : "Submit Article",
+    "generic_form" : {
+      "title" : "Submit Article",
+      "markdown_info" : SUBMISSION_GUIDLINES,
+      "form" : form,
+      "cancel_url" : "/",
+    }
   }
   return render(request, 'common/submit.html', templatearguments)
 
-def submitted(request):
-  return render(request, 'article/submitted.html', {})
-
+@login_required
 def edit(request, article_id):
   if not request.user.is_superuser:
     raise PermissionDenied
@@ -103,9 +106,11 @@ def edit(request, article_id):
     form = forms.Edit(article=article)
 
   templatearguments = {
-    "form" : form,
-    "form_cancel_url" : article.url(),
-    "form_title" : "Edit Article",
+    "generic_form" : {
+      "title" : "Edit Article",
+      "cancel_url" : article.url(),
+      "form" : form,
+    }
   }
   return render(request, 'common/submit.html', templatearguments)
 
@@ -136,7 +141,7 @@ def listing(request, category_slug, year, month):
       raise Http404
     articles = articles.filter(category=currentcategory)
     articles = articles.order_by('ordering_category')
-  
+
   middle = len(articles) / 2
   middle = (len(articles) % 2 != 0) and (middle + 1) or middle
   templatearguments = {
@@ -153,28 +158,55 @@ def display(request, article_id):
     raise PermissionDenied
 
   if request.method == "POST":
-    form = Support(request.POST)
-    if form.is_valid():
-      amount = form.cleaned_data["amount"]
-      ratio = form.cleaned_data["ratio"] / Decimal("100.0")
+    support_form = Support(request.POST)
+    comment_form = comment_forms.Comment(request.POST)
+
+    if comment_form.is_valid():
+      comment = comment_models.Comment()
+      comment.alias = comment_form.cleaned_data["alias"].strip()
+      comment.content = comment_form.cleaned_data["content"].strip()
+      comment.save()
+      article.comments.add(comment)
+      return HttpResponseRedirect(article.url())
+
+    if support_form.is_valid():
+      amount = support_form.cleaned_data["amount"]
+      ratio = support_form.cleaned_data["ratio"] / Decimal("100.0")
       url = "/support/%s/%.2f/%.2f/%s.html" % (
           article.id, amount, ratio, article.title_slug()
       )
       return HttpResponseRedirect(url)
+
   else: # "GET"
-    form = Support()
+    support_form = Support()
+    comment_form = comment_forms.Comment()
 
   templatearguments = {
-    "form_title" : "Support the author",
-    "submit_label" : "Continue",
-    "submit_button_class" : "btn btn-success",
-    "form" : form,
     "article" : article,
     "currentcategory" : article.category,
     "currentissue" : article.issue,
+
+    "comment_form" : {
+      "title" : "Create comment",
+      'form' : comment_form,
+      "submit_label" : "Post comment",
+      'submit_class' : "btn btn-success",
+    },
+
+    "support_form" : {
+      "title" : "Support the author",
+      'form' : support_form,
+      "submit_label" : "Continue",
+      'submit_class' : "btn btn-success",
+    },
   }
   return render(request, 'article/display.html', templatearguments)
 
+# TODO use page instead
 def contact(request):
   return render(request, 'common/contact.html', {})
+
+# TODO use page instead
+def submitted(request):
+  return render(request, 'article/submitted.html', {})
 

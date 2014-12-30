@@ -21,10 +21,32 @@
       <p> {{ article.coverletter|render_markdown }} </p>
     </div>
 
-    <div>
-      {% include "common/form.html" %}
+    <hr>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+        {# COMMENTS #}
+        {% with article.comments.all as comments %}
+          {% include "comment/comments.html" %}
+        {% endwith %}
+
+        {% with comment_form as generic_form %}
+          {% include "common/generic_form.html" %}
+        {% endwith %}
+
+      </div>
+      <div class="col-sm-6">
+
+        {# SUPPORT #}
+        {% with support_form as generic_form %}
+          {% include "common/generic_form.html" %}
+        {% endwith %}
+
+      </div>
     </div>
 
+    {# TODO action area #}
     <p>
       {% if user.is_superuser %}
         <a href="{{ article.url_edit }}" class="btn btn-primary">Edit</a>

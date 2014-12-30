@@ -41,10 +41,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.humanize',
 
-    # our apps
+    # trainless apps
     'article',
     'common',
     'support',
+    'comment',
 
     # third party apps
     'bootstrapform',

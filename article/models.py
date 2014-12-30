@@ -36,6 +36,12 @@ class Article(models.Model):
   ordering_featured = models.IntegerField(default=0)
   featured = models.BooleanField(default=False)
 
+  # user content
+  comments = models.ManyToManyField(                                                    
+    'comment.Comment', related_name="article_comments", null=True, blank=True                                    
+  )   
+
+
   def title_slug(self):
     return slugify(unidecode(self.title))
 

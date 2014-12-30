@@ -15,7 +15,7 @@ def support(request, article_id, amount, ratio):
     raise PermissionDenied
 
   amount = Decimal(amount)
-  if amount < Decimal("0.0"):
+  if amount < Decimal("1.0"):
     raise PermissionDenied
   ratio = Decimal(ratio)
   if ratio < Decimal("0.0") or ratio > Decimal("100.0"):

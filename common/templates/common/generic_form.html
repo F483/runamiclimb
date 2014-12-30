@@ -11,36 +11,40 @@
     <fieldset>
 
       {##### TITLE #####}
-      <legend>{{form_title}}</legend>
+      {% if generic_form.title %}
+        <legend>{{ generic_form.title }}</legend>
+      {% endif %}
 
       {##### INFO #####}
-      {% if form_info %}
+      {% if generic_form.markdown_info %}
         <div class="alert alert-dismissable alert-info">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          {{ form_info|render_markdown }}
+          {{ generic_form.markdown_info|render_markdown }}
         </div>
       {% endif %}
 
       {##### RENDER FORM #####}
-      {{ form|bootstrap }}
+      {% if generic_form.form %}
+        {{ generic_form.form|bootstrap }}
+      {% endif %}
 
       {##### CANCEL AND SUBMIT BUTTONS #####}
       <div class="form-group">
-        {% if form_cancel_url %}
+        {% if generic_form.cancel_url %}
           <button type="button" class="btn btn-default"
-                  onclick="window.location.href = '{{ form_cancel_url }}';">
+                  onclick="window.location.href = '{{ generic_form.cancel_url }}';">
             Cancel
           </button>
         {% endif %}
         <button type="submit"
-          {% if submit_button_class %}
-                class="{{ submit_button_class }}"
+          {% if generic_form.submit_class %}
+                class="{{ generic_form.submit_class }}"
           {% else %}
                 class="btn btn-primary"
           {% endif %}
         >
-          {% if submit_label %}
-            {{ submit_label }}
+          {% if generic_form.submit_label %}
+            {{ generic_form.submit_label }}
           {% else %}
             Submit
           {% endif %}

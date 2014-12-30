@@ -9,6 +9,7 @@ urlpatterns = patterns('',
   url(r'^photologue/', include('photologue.urls', namespace='photologue')),
   url(r'^paypal/', include('paypal.standard.ipn.urls')),
   url(r'^support/', include('support.urls')),
+  url(r'^comment/', include('comment.urls')),
   url(r'^', include("article.urls")),
 )
 
