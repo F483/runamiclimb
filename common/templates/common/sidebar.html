@@ -2,7 +2,12 @@
 {# SUBMIT ARTICLE #}
 <div class="list-group">
   <a href="/article/submit.html" class="list-group-item">Submit</a>
-  <a href="/article/contact.html" class="list-group-item">Contact</a>
+  {% for page in sidebar_pages %}
+    <a href="{{ page.url }}" class="list-group-item">{{ page.title }}</a>
+  {% endfor %}
+  {% if user.is_superuser %}
+    <a href="/page/create.html" class="list-group-item">Create page</a>
+  {% endif %}
 </div>
 
 <hr>

@@ -10,6 +10,7 @@ urlpatterns = patterns('',
   url(r'^paypal/', include('paypal.standard.ipn.urls')),
   url(r'^support/', include('support.urls')),
   url(r'^comment/', include('comment.urls')),
+  url(r'^page/', include('page.urls')),
   url(r'^', include("article.urls")),
 )
 

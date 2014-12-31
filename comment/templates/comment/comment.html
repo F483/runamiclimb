@@ -3,7 +3,7 @@
     <i class="fa fa-comment"></i>
     {{ comment.alias }}
     <div class="pull-right">
-      {{ comment.created }}
+      {{ comment.created|timesince }} ago
       {% if user.is_superuser and not disable_comment_delete %}
         {% with url=comment.url_delete|add:"?next="|add:request.path %}      
           <a href="{{ url }}"><i class="fa fa-times"></i></a>

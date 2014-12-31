@@ -12,47 +12,10 @@ from paypal.standard.forms import PayPalPaymentsForm
 from config import settings
 from support.forms import Support
 from article.models import Article, Category, Issue
+from page.models import Page
 from article import forms
 from comment import forms as comment_forms
 from comment import models as comment_models
-
-
-SUBMISSION_GUIDLINES = """
-#### Submission Guidlines
-
-Thank you for submitting to Trainless Magazine. We look forward to reading
-your work.
-
-We accept nonfiction and fiction writing. Please read through our magazine to
-familiarize yourself with what kind of work we publish. Nonfiction articles
-should stay relevant to our magazine's theme of travel, athleticism, and
-culture. Fiction is much more open, as every world created through fiction
-presents a new "culture."
-
-Stories ranging from 100-3,000 words are accepted. It would have to be an
-incredible, really unstoppable story to keep our readers reading after 3,000
-words.
-
-In regards to format, words that are italicized should have this symbol * at
-the start and end of the italicized word or phrase. Bold letters should be
-typed in all capital letters.
-
-In terms of style, excessive profanity, violence, and erotica will not be
-accepted.
-
-Poetry is, at this time, not accepted.
-
-Please send a maximum of two submissions to be considered per issue. We print
-between 10 and 15 articles a month, depending on length, and only one article
-or story per author per issue.
-
-Please allow two to four weeks response time.
-
-Relevant photographs will be requested upon acceptance of the article or story.
-
-Simultaneous articles are accepted. We ask that you tell us as soon as your
-work is accepted elsewhere.
-"""
 
 def submit(request):
 
@@ -66,14 +29,16 @@ def submit(request):
       article.content = form.cleaned_data["content"]
       article.coverletter = form.cleaned_data["coverletter"]
       article.save()
-      return HttpResponseRedirect("/article/submitted.html")
+      submitted_page = get_object_or_404(Page, title="Article Submitted")
+      return HttpResponseRedirect(submitted_page.url())
   else: # "GET"
     form = forms.Submit()
 
+  guidelines = get_object_or_404(Page, title="Submission Guidelines")
   templatearguments = {
     "generic_form" : {
       "title" : "Submit Article",
-      "markdown_info" : SUBMISSION_GUIDLINES,
+      "markdown_info" : guidelines.content,
       "form" : form,
       "cancel_url" : "/",
     }
@@ -201,12 +166,4 @@ def display(request, article_id):
     },
   }
   return render(request, 'article/display.html', templatearguments)
-
-# TODO use page instead
-def contact(request):
-  return render(request, 'common/contact.html', {})
-
-# TODO use page instead
-def submitted(request):
-  return render(request, 'article/submitted.html', {})
 

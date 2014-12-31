@@ -46,11 +46,10 @@
       </div>
     </div>
 
-    {# TODO action area #}
-    <p>
-      {% if user.is_superuser %}
+    {% if user.is_superuser %}
+      <p>
         <a href="{{ article.url_edit }}" class="btn btn-primary">Edit</a>
-      {% endif %}
-    </p>
+      </p>
+    {% endif %}
 
 {% endblock %} 
