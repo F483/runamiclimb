@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'support',
     'comment',
     'page',
+    'links',
 
     # third party apps
     'bootstrapform',
@@ -81,6 +82,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   "article.context_processors.add_issues",
   "article.context_processors.add_categories",
   "page.context_processors.add_sidebar_pages",
+  "links.context_processors.add_sidebar_links",
 )
 
 ROOT_URLCONF = 'config.urls'

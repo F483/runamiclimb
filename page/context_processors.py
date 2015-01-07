@@ -6,6 +6,7 @@ from page.models import Page
 
 def add_sidebar_pages(request):
   sidebar_pages = Page.objects.filter(in_sidebar=True)
+  sidebar_pages = sidebar_pages.order_by('sidebar_ordering')
   return { 'sidebar_pages' : sidebar_pages }
 
 
