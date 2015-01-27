@@ -79,3 +79,6 @@ def display(request, page_id):
   page = get_object_or_404(Page, id=page_id)
   return render(request, 'page/display.html', { "page" : page })
 
+def subscribe(request):
+  return render(request, 'page/subscribe.html', {})
+

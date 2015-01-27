@@ -84,7 +84,7 @@ class Issue(models.Model):
 
   def __unicode__(self):
     months = [
-        "Jananuary",
+        "January",
         "February",
         "March",
         "April",
