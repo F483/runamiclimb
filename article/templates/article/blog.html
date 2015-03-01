@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if articles %}
+    {% for article in articles %}
+      {% include "article/preview.html" %}
+    {% endfor %}
+  {% else %}
+    Currently no bolg articles available.
+  {% endif %}
+{% endblock %}
