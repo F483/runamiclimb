@@ -11,7 +11,7 @@
     <link type="image/x-icon" rel="icon" href="/static/favicon.png">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="Copyright" content="Kristyn Bacon 2014" />
-    <meta name="description" content="Long nights and long days, Tired legs and unwashed hands, Mountains and deserts and dangerous people, And where you go when you're trainless." /> 
+    <meta name="description" content="Long nights and long days, Tired legs and unwashed hands, Mountains and deserts and dangerous people, And where you go when you're trainless." />
 
     {##### BOOTSWATCH STYLE #####}
     <link rel="stylesheet" href="/static/bootswatch/{{ settings.BOOTSWATCH_THEME }}/bootstrap.css" media="screen">
@@ -25,6 +25,9 @@
     {##### PAGEDOWN BOOTSTRAP #####}
     <link href="/static/Font-Awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css" rel="stylesheet">
+
+    {##### DATEPICKER STYLE #####}
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
     {##### TRAINLESS STYLE #####}
     <link href="/static/trainless.css" rel="stylesheet">
@@ -63,6 +66,13 @@
       (function () {
         $("textarea.pagedownBootstrap").pagedownBootstrap();
       })();
+    </script>
+
+    {##### DATEPICKER SCRIPT #####}
+    <script>
+      $(function() {
+        $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+      });
     </script>
 
     {##### GOOGLE ANALYTICS #####}

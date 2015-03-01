@@ -38,4 +38,7 @@ urlpatterns = patterns('article.views',
   # submit article view
   url(r"^article/submit.html$", "submit"),
 
+  # blog view
+  url(r"^article/blog.html$", "blog"),
+
 )

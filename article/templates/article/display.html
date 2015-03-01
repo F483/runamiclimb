@@ -5,8 +5,12 @@
 
     <h1>{{ article.title }}</h1>
     <p>
-      {{ article.author }} <br>
-      {{ article.issue }}
+      {% if article.blog_article %}
+        {{ article.blog_date }}
+      {% else %}
+        {{ article.author }} <br>
+        {{ article.issue }}
+      {% endif %}
     </p>
 
     <p> <hr> </p>

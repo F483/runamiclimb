@@ -7,7 +7,8 @@ class ArticleAdmin(admin.ModelAdmin):
   list_display = (
     'title', 'author', 'email',
     'issue', 'category', 'ordering_category',
-    'featured', 'ordering_featured'
+    'featured', 'ordering_featured', 
+    'blog_article'
   )
   fieldsets = [
     ('Article content', {'fields': ['title', 'preview', 'content', 'gallery']}),
@@ -19,6 +20,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'featured', 'ordering_featured'
       ]
     }),
+    ('Blog info', { 'fields': [ 'blog_article', 'blog_date' ] }),
   ]
 
 

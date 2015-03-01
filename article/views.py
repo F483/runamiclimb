@@ -1,4 +1,3 @@
-import datetime
 import uuid
 from decimal import Decimal
 from django.shortcuts import render
@@ -16,6 +15,12 @@ from page.models import Page
 from article import forms
 from comment import forms as comment_forms
 from comment import models as comment_models
+
+def blog(request):
+  articles = Article.objects.filter(blog_article=True)
+  articles = articles.order_by('blog_date')
+  templatearguments = { "articles" : articles }
+  return render(request, 'article/blog.html', templatearguments)
 
 def submit(request):
 
@@ -65,6 +70,8 @@ def edit(request, article_id):
       article.ordering_category = form.cleaned_data["ordering_category"]
       article.featured = form.cleaned_data["featured"]
       article.ordering_featured = form.cleaned_data["ordering_featured"]
+      article.blog_article = form.cleaned_data["blog_article"]
+      article.blog_date = form.cleaned_data["blog_date"]
       article.save()
       return HttpResponseRedirect(article.url())
   else: # "GET"
@@ -119,8 +126,8 @@ def listing(request, category_slug, year, month):
 
 def display(request, article_id):
   article = get_object_or_404(Article, id=article_id)
-  if not article.issue.published and not request.user.is_superuser:
-    raise PermissionDenied
+  if(not article.published() and not request.user.is_superuser):
+    raise PermissionDenied # TODO test it!
 
   if request.method == "POST":
     support_form = Support(request.POST)

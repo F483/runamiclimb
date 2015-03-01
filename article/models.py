@@ -1,3 +1,4 @@
+import datetime
 from unidecode import unidecode
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -25,22 +26,27 @@ class Article(models.Model):
   issue = models.ForeignKey(
       "article.Issue",
       related_name="articles",
-      null=True
+      null=True,
+      blank=True
   )
   category = models.ForeignKey(
       "article.Category",
       related_name="articles",
-      null=True
+      null=True,
+      blank=True
   )
   ordering_category = models.IntegerField(default=0)
   ordering_featured = models.IntegerField(default=0)
   featured = models.BooleanField(default=False)
 
-  # user content
-  comments = models.ManyToManyField(                                                    
-    'comment.Comment', related_name="article_comments", null=True, blank=True                                    
-  )   
+  # Blog info
+  blog_article = models.BooleanField(default=False)
+  blog_date = models.DateField(null=True, default=None)
 
+  # User content
+  comments = models.ManyToManyField(
+    'comment.Comment', related_name="article_comments", null=True, blank=True
+  )
 
   def title_slug(self):
     return slugify(unidecode(self.title))
@@ -63,6 +69,11 @@ class Article(models.Model):
     if not self.issue:
       return "%s (no issue)" % self.title
     return self.title
+
+  def published(self):
+    today = datetime.datetime.now().date()
+    return ((self.blog_article and (today > self.blog_date)) or
+            (not self.blog_article and not self.issue.published))
 
 
 class Category(models.Model):

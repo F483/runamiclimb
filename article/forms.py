@@ -74,11 +74,13 @@ class Edit(forms.Form):
   # Publishing info
   issue = forms.ModelChoiceField(
       label="Issue",
-      queryset=Issue.objects.all()
+      queryset=Issue.objects.all(),
+      required=False
   )
   category = forms.ModelChoiceField(
       label="Category",
-      queryset=Category.objects.all()
+      queryset=Category.objects.all(),
+      required=False
   )
   ordering_category = forms.IntegerField(
       label="Category ordering position",
@@ -88,6 +90,14 @@ class Edit(forms.Form):
   ordering_featured = forms.IntegerField(
       label="Featured ordering position",
       initial=0
+  )
+
+  # Blog info
+  blog_article = forms.BooleanField(label="Blog article", required=False)
+  blog_date = forms.DateField(
+    label="Blog date",
+    help_text="Future dates will automaticly not be listed.",
+    widget=forms.widgets.DateInput(attrs={'class' : 'datepicker'}),
   )
 
   def __init__(self, *args, **kwargs):
@@ -103,4 +113,6 @@ class Edit(forms.Form):
     self.fields["ordering_category"].initial = article.ordering_category
     self.fields["featured"].initial = article.featured
     self.fields["ordering_featured"].initial = article.ordering_featured
+    self.fields["blog_article"].initial = article.blog_article
+    self.fields["blog_date"].initial = article.blog_date
 

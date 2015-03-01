@@ -11,7 +11,7 @@ from config import settings
 
 def support(request, article_id, amount, ratio):
   article = get_object_or_404(Article, id=article_id)
-  if not article.issue.published and not request.user.is_superuser:
+  if not article.published() and not request.user.is_superuser:
     raise PermissionDenied
 
   amount = Decimal(amount)
@@ -52,7 +52,7 @@ def support(request, article_id, amount, ratio):
 @csrf_exempt # for paypal
 def paypal_return(request, article_id, template):
   article = get_object_or_404(Article, id=article_id)
-  if not article.issue.published and not request.user.is_superuser:
+  if not article.published() and not request.user.is_superuser:
     raise PermissionDenied
   templatearguments = {
     "article" : article,
