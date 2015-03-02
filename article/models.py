@@ -72,8 +72,8 @@ class Article(models.Model):
 
   def published(self):
     today = datetime.datetime.now().date()
-    return ((self.blog_article and (today > self.blog_date)) or
-            (not self.blog_article and not self.issue.published))
+    return ((self.blog_article and (today >= self.blog_date)) or
+            (not self.blog_article and self.issue.published))
 
 
 class Category(models.Model):
