@@ -41,7 +41,7 @@ class Article(models.Model):
 
   # Blog info
   blog_article = models.BooleanField(default=False)
-  blog_date = models.DateField(null=True, default=None)
+  blog_date = models.DateField(null=True, default=None, blank=True)
 
   # User content
   comments = models.ManyToManyField(

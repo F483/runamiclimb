@@ -18,7 +18,7 @@ from comment import models as comment_models
 
 def blog(request):
   articles = Article.objects.filter(blog_article=True)
-  articles = articles.order_by('blog_date')
+  articles = articles.order_by('-blog_date')
   templatearguments = { "articles" : articles }
   return render(request, 'article/blog.html', templatearguments)
 
