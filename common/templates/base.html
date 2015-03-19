@@ -3,7 +3,12 @@
 <html>
 
   <head>
-    <title>Trainless</title>
+    {% if article %}
+      <title>Trainless: {{ article.title }}</title>
+    {% else %}
+      <title>Trainless</title>
+    {% endif %}
+
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -11,7 +16,12 @@
     <link type="image/x-icon" rel="icon" href="/static/favicon.png">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="Copyright" content="Kristyn Bacon 2014" />
-    <meta name="description" content="Long nights and long days, Tired legs and unwashed hands, Mountains and deserts and dangerous people, And where you go when you're trainless." />
+
+    {% if article %}
+      <meta name="description" content="{{ article.preview }}" />
+    {% else %}
+      <meta name="description" content="Long nights and long days, Tired legs and unwashed hands, Mountains and deserts and dangerous people, And where you go when you're trainless." />
+    {% endif %}
 
     {##### BOOTSWATCH STYLE #####}
     <link rel="stylesheet" href="/static/bootswatch/{{ settings.BOOTSWATCH_THEME }}/bootstrap.css" media="screen">
