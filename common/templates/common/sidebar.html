@@ -13,19 +13,28 @@
 
 <hr>
 
-{# ISSUES #}
-{% include "common/issues.html" %}
+{# LINKS #}
+<div class="list-group text_center">
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-like-box" data-href="https://www.facebook.com/pages/Trainless-Magazine/891585294193215?fref=nf" data-width="250" data-colorscheme="light" data-show-faces="false" data-header="true" data-stream="false" data-show-border="true"></div>
+
+  <a href="https://twitter.com/Trainlessmag" class="twitter-follow-button" data-show-count="false">Follow @Trainlessmag</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</div>
 
 <hr>
 
-{# LINKS #}
-<div class="list-group">
-  {% for link in sidebar_links %}
-    <a href="{{ link.url }}" target="_blank" class="list-group-item">
-      {{ link.title }}
-    </a>
-  {% endfor %}
-</div>
+{# ISSUES #}
+{% include "common/issues.html" %}
 
 <hr>
 

@@ -5,6 +5,12 @@ body {
   padding-top: 0px;
 }
 
+/***** text formatting *****/
+.fontsize_xxl { font-size: xx-large; }
+.fontsize_xl { font-size: x-large; }
+.text_center { text-align: center; }
+.text_right { text-align: right; }
+.text_left { text-align: left; }
 
 /***** Titlebar *****/
 
