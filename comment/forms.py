@@ -5,6 +5,7 @@ class Comment(forms.Form):
 
   alias = forms.CharField(
       label="Name",
+      required=False
   )
 
   content = forms.CharField(

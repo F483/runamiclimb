@@ -1,7 +1,11 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-comment"></i>
-    {{ comment.alias }}
+    {% if comment.alias %}
+      {{ comment.alias }}
+    {% else %}
+      Anonymous
+    {% endif %}
     <div class="pull-right">
       {{ comment.created|timesince }} ago
       {% if user.is_superuser and not disable_comment_delete %}
