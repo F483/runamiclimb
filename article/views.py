@@ -86,23 +86,12 @@ def edit(request, article_id):
   }
   return render(request, 'common/submit.html', templatearguments)
 
-def listing(request, category_slug, year, month):
-  articles = Article.objects.all()
-
-  # issue
-  currentissue = None
-  if month and year: # show articles from selected issue
-    currentissue = get_object_or_404(Issue, month=int(month), year=int(year))
-  else: # show articles from newest published issue
-    issues = Issue.objects.filter(published=True)
-    currentissue = issues and issues[0] or None
-  if currentissue and not currentissue.published and not request.user.is_superuser:
-    raise PermissionDenied
-  articles = articles.filter(issue=currentissue)
+def show_listing(request, currentissue, category_slug):
+  articles = Article.objects.filter(issue=currentissue)
 
   # category
   currentcategory = None
-  if not category_slug: # show featured articles
+  if not category_slug or category_slug == "featured":
     articles = articles.filter(featured=True)
     articles = articles.order_by('ordering_featured')
   else: # show category articles
@@ -123,6 +112,26 @@ def listing(request, category_slug, year, month):
     "currentissue" : currentissue,
   }
   return render(request, 'article/listing.html', templatearguments)
+
+def show_cover(request, currentissue):
+  templatearguments = { "currentissue" : currentissue}
+  return render(request, 'article/cover.html', templatearguments)
+
+def listing(request, category_slug, year, month):
+
+  # issue
+  currentissue = None
+  if month and year: # show articles from selected issue
+    currentissue = get_object_or_404(Issue, month=int(month), year=int(year))
+  else: # show articles from newest published issue
+    issues = Issue.objects.filter(published=True)
+    currentissue = issues and issues[0] or None
+  if currentissue and not currentissue.published and not request.user.is_superuser:
+    raise PermissionDenied
+
+  if currentissue.pdf and currentissue.gallery and not category_slug:
+    return show_cover(request, currentissue)
+  return show_listing(request, currentissue, category_slug)
 
 def display(request, article_id):
   article = get_object_or_404(Article, id=article_id)

@@ -92,6 +92,13 @@ class Issue(models.Model):
   month = models.IntegerField()
   year = models.IntegerField()
   published = models.BooleanField(default=False)
+  pdf = models.FileField(upload_to="issues", null=True, default=None)
+  gallery = models.ForeignKey( # for issue cover and index images
+      "photologue.Gallery",
+      related_name="issues",
+      null=True,
+      blank=True
+  )
 
   def __unicode__(self):
     months = [

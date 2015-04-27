@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-sm-6 article_display">
+      {% if currentissue.gallery and currentissue.gallery.photos.first %}
+        {% with currentissue.gallery.photos.first as photo %}
+          <a href="{{ currentissue.pdf.url }}">
+            <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+          </a>
+        {% endwith %}
+      {% endif %}
+    </div>
+    <div class="col-sm-6 article_display">
+      {% if currentissue.gallery and currentissue.gallery.photos.last %}
+        {% with currentissue.gallery.photos.last as photo %}
+          <a href="{{ currentissue.pdf.url }}">
+            <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+          </a>
+        {% endwith %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
