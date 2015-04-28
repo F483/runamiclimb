@@ -3,15 +3,9 @@
     <a class="btn btn-success" href="{{ currentissue.pdf.url }}">
       Full issue as PDF
     </a>
-    {% if not currentcategory %}
-      <a class="btn btn-primary" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
-        Featured
-      </a>
-    {% else %}
-      <a class="btn btn-link" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
-        Featured
-      </a>
-    {% endif %}
+    <a class="btn btn-primary" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
+      Featured articles
+    </a>
   {% else %}
     {% if not currentcategory %}
       <a class="btn btn-primary" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
