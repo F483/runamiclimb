@@ -78,7 +78,6 @@ class Edit(forms.Form):
       required=False
   )
   featured = forms.BooleanField(label="Featured", required=False)
-  blog = forms.BooleanField(label="Blog article", required=False)
   date = forms.DateField(
     label="Date",
     help_text="Future dates will automaticly not be listed.",
@@ -95,6 +94,5 @@ class Edit(forms.Form):
     self.fields["content"].initial = article.content
     self.fields["category"].initial = article.category
     self.fields["featured"].initial = article.featured
-    self.fields["blog"].initial = article.blog
     self.fields["date"].initial = article.date
 

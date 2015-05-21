@@ -10,13 +10,12 @@ class ArticleAdmin(admin.ModelAdmin):
     'email',
     'category',
     'featured',
-    'blog',
     'date'
   )
   fieldsets = [
     ('Article content', {'fields': ['title', 'preview', 'content', 'gallery']}),
     ('Author info',     {'fields': ['author', 'email', 'coverletter']}),
-    ('Publishing info', {'fields': ['category', 'featured', 'blog', 'date'] }),
+    ('Publishing info', {'fields': ['category', 'featured', 'date'] }),
   ]
 
 

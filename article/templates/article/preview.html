@@ -3,13 +3,6 @@
 <div class="panel panel-default panel-body article_preview">
 
   <a href="{{article.url}}"><h3>{{ article.title }}</h3></a>
-  {% if article.blog %}
-    <p>
-      {% if not article.blog %}
-        {{ article.author }} -
-      {% endif %}
-    </p>
-  {% endif %}
 
   <p>
     {% if article.gallery and article.gallery.photos.first %}

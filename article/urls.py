@@ -22,13 +22,11 @@ urlpatterns = patterns('article.views',
   # submit article view
   url(r"^article/submit.html$", "submit"),
 
-  # blog view
-  url(r"^article/blog.html$", "blog"),
-
   # archive view
   url(r"^archive.html$", "archive"),
 
   # XXX retired urls preserved in case of links
-  url(r"^issue/[0-9]+\-[0-9]+/$", "listing", { 'category_slug' : None}),
+  url(r"^article/blog.html$", "listing", { 'category_slug' : None }),
+  url(r"^issue/[0-9]+\-[0-9]+/$", "listing", { 'category_slug' : None }),
   url(r"^issue/[0-9]+\-[0-9]+/category/%s/$" % category_slug, "listing"),
 )

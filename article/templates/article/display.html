@@ -4,11 +4,7 @@
 {% block content %}
 
     <h1>{{ article.title }}</h1>
-    <p>
-      {% if not article.blog %}
-        {{ article.author }} -
-      {% endif %}
-    </p>
+    <p> {{ article.author }} </p>
 
     <p> <hr> </p>
 

@@ -30,7 +30,6 @@ class Article(models.Model):
       blank=True
   )
   featured = models.BooleanField(default=False)
-  blog = models.BooleanField(default=False)
   date = models.DateField(null=True, default=None, blank=True)
 
   # User content
