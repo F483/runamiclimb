@@ -77,15 +77,7 @@ class Edit(forms.Form):
       queryset=Category.objects.all(),
       required=False
   )
-  ordering_category = forms.IntegerField(
-      label="Category ordering position",
-      initial=0
-  )
   featured = forms.BooleanField(label="Featured", required=False)
-  ordering_featured = forms.IntegerField(
-      label="Featured ordering position",
-      initial=0
-  )
 
   # Blog info
   blog_article = forms.BooleanField(label="Blog article", required=False)
@@ -104,9 +96,7 @@ class Edit(forms.Form):
     self.fields["preview"].initial = article.preview
     self.fields["content"].initial = article.content
     self.fields["category"].initial = article.category
-    self.fields["ordering_category"].initial = article.ordering_category
     self.fields["featured"].initial = article.featured
-    self.fields["ordering_featured"].initial = article.ordering_featured
     self.fields["blog_article"].initial = article.blog_article
     self.fields["blog_date"].initial = article.blog_date
 

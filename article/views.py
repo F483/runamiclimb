@@ -66,9 +66,7 @@ def edit(request, article_id):
       article.content = form.cleaned_data["content"]
       article.coverletter = form.cleaned_data["coverletter"]
       article.category = form.cleaned_data["category"]
-      article.ordering_category = form.cleaned_data["ordering_category"]
       article.featured = form.cleaned_data["featured"]
-      article.ordering_featured = form.cleaned_data["ordering_featured"]
       article.blog_article = form.cleaned_data["blog_article"]
       article.blog_date = form.cleaned_data["blog_date"]
       article.save()
@@ -97,7 +95,6 @@ def listing(request, category_slug):
   currentcategory = None
   if not category_slug or category_slug in ["featured", "home"]:
     articles = articles.filter(featured=True)
-    articles = articles.order_by('ordering_featured')
   else: # show category articles
     for category in Category.objects.all():
       if category.slug() == category_slug:
@@ -105,7 +102,6 @@ def listing(request, category_slug):
     if not currentcategory:
       raise Http404
     articles = articles.filter(category=currentcategory)
-    articles = articles.order_by('ordering_category')
 
   middle = len(articles) / 2
   middle = (len(articles) % 2 != 0) and (middle + 1) or middle

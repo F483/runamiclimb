@@ -35,8 +35,6 @@ class Article(models.Model):
       null=True,
       blank=True
   )
-  ordering_category = models.IntegerField(default=0) # TODO remove
-  ordering_featured = models.IntegerField(default=0) # TODO remove
   featured = models.BooleanField(default=False)
 
   # Blog info
