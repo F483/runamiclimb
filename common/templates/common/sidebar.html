@@ -1,11 +1,11 @@
 
 <div class="list-group">
-  <a href="/article/submit.html" class="list-group-item">Submit</a>
+  <a href="/article/submit.html" class="list-group-item">Submissions</a>
   <a href="/page/subscribe.html" class="list-group-item">Subscribe</a>
-  <a href="/article/blog.html" class="list-group-item">Bacon Blog</a>
   {% for page in sidebar_pages %}
     <a href="{{ page.url }}" class="list-group-item">{{ page.title }}</a>
   {% endfor %}
+  <a href="/archive.html" class="list-group-item">Archive</a>
   {% if user.is_superuser %}
     <a href="/page/create.html" class="list-group-item">Create page</a>
   {% endif %}
@@ -23,21 +23,3 @@
 
 </div>
 
-<hr>
-
-{# ARCHIVE #}
-<div class="list-group">
-    <a href="/archive/" class="list-group-item active">Archive</a>
-</div>
-
-<hr>
-
-{# SLOGAN #}
-<b>
- <i>
-    <p>Long nights and long days,</p>
-    <p>Tired legs and unwashed hands,</p>
-    <p>Mountains and deserts and dangerous people,</p>
-    <p>And where you go when you're trainless.</p>
-  </i>
-</b>

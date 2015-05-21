@@ -83,8 +83,9 @@ def edit(request, article_id):
   return render(request, 'common/submit.html', templatearguments)
 
 def archive(request):
-  # FIXME
-  return render(request, 'article/cover.html', templatearguments)
+  issues = Issue.objects.filter(published=True).exclude(pdf=None)
+  templatearguments = { 'issues' : issues }
+  return render(request, 'article/archive.html', templatearguments)
 
 def listing(request, category_slug):
 
