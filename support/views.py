@@ -45,7 +45,6 @@ def support(request, article_id, amount, ratio):
       "author_share" : amount * ratio,
       "form": PayPalPaymentsForm(initial=paypal_dict, button_type="donate"),
       "currentcategory" : article.category,
-      "currentissue" : article.issue,
   }
   return render(request, "support/support.html", templatearguments)
 
@@ -57,7 +56,6 @@ def paypal_return(request, article_id, template):
   templatearguments = {
     "article" : article,
     "currentcategory" : article.category,
-    "currentissue" : article.issue,
   }
   return render(request, template, templatearguments)
 

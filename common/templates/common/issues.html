@@ -1,9 +1,0 @@
-<div class="list-group">
-  {% for issue in issues %}
-    {% if issue == currentissue %}
-      <a href="/issue/{{issue.year}}-{{issue.month}}/" class="list-group-item active">{{issue}}</a>
-    {% else %}
-      <a href="/issue/{{issue.year}}-{{issue.month}}/" class="list-group-item">{{issue}}</a>
-    {% endif %}
-  {% endfor %}
-</div>

@@ -65,7 +65,6 @@ def edit(request, article_id):
       article.preview = form.cleaned_data["preview"]
       article.content = form.cleaned_data["content"]
       article.coverletter = form.cleaned_data["coverletter"]
-      article.issue = form.cleaned_data["issue"]
       article.category = form.cleaned_data["category"]
       article.ordering_category = form.cleaned_data["ordering_category"]
       article.featured = form.cleaned_data["featured"]
@@ -86,12 +85,17 @@ def edit(request, article_id):
   }
   return render(request, 'common/submit.html', templatearguments)
 
-def show_listing(request, currentissue, category_slug):
-  articles = Article.objects.filter(issue=currentissue)
+def archive(request):
+  # FIXME
+  return render(request, 'article/cover.html', templatearguments)
+
+def listing(request, category_slug):
+
+  articles = Article.objects.all()
 
   # category
   currentcategory = None
-  if not category_slug or category_slug == "featured":
+  if not category_slug or category_slug in ["featured", "home"]:
     articles = articles.filter(featured=True)
     articles = articles.order_by('ordering_featured')
   else: # show category articles
@@ -108,30 +112,10 @@ def show_listing(request, currentissue, category_slug):
   templatearguments = {
     "left_articles" : articles[:middle],
     "right_articles" : articles[middle:],
-    "currentcategory" : currentcategory,
-    "currentissue" : currentissue,
+    "currentcategory" : currentcategory
   }
   return render(request, 'article/listing.html', templatearguments)
 
-def show_cover(request, currentissue):
-  templatearguments = { "currentissue" : currentissue}
-  return render(request, 'article/cover.html', templatearguments)
-
-def listing(request, category_slug, year, month):
-
-  # issue
-  currentissue = None
-  if month and year: # show articles from selected issue
-    currentissue = get_object_or_404(Issue, month=int(month), year=int(year))
-  else: # show articles from newest published issue
-    issues = Issue.objects.filter(published=True)
-    currentissue = issues and issues[0] or None
-  if currentissue and not currentissue.published and not request.user.is_superuser:
-    raise PermissionDenied
-
-  if currentissue.pdf and currentissue.gallery and not category_slug:
-    return show_cover(request, currentissue)
-  return show_listing(request, currentissue, category_slug)
 
 def display(request, article_id):
   article = get_object_or_404(Article, id=article_id)
@@ -165,7 +149,6 @@ def display(request, article_id):
   templatearguments = {
     "article" : article,
     "currentcategory" : article.category,
-    "currentissue" : article.issue,
 
     "comment_form" : {
       "title" : "Create comment",

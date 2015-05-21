@@ -72,11 +72,6 @@ class Edit(forms.Form):
   )
 
   # Publishing info
-  issue = forms.ModelChoiceField(
-      label="Issue",
-      queryset=Issue.objects.all(),
-      required=False
-  )
   category = forms.ModelChoiceField(
       label="Category",
       queryset=Category.objects.all(),
@@ -108,7 +103,6 @@ class Edit(forms.Form):
     self.fields["coverletter"].initial = article.coverletter
     self.fields["preview"].initial = article.preview
     self.fields["content"].initial = article.content
-    self.fields["issue"].initial = article.issue
     self.fields["category"].initial = article.category
     self.fields["ordering_category"].initial = article.ordering_category
     self.fields["featured"].initial = article.featured

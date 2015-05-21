@@ -78,7 +78,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
   "common.context_processors.add_settings",
   "common.context_processors.add_titlebar_photos",
-  "article.context_processors.add_issues",
   "article.context_processors.add_categories",
   "page.context_processors.add_sidebar_pages",
 )

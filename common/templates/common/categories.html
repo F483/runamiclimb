@@ -1,32 +1,20 @@
-{% if currentissue %}
-  {% if currentissue.pdf %}
-    <a class="btn btn-success" href="{{ currentissue.pdf.url }}">
-      Full issue as PDF
-    </a>
-    <a class="btn btn-primary" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
-      Featured articles
+{% if not currentcategory %}
+  <a class="btn btn-primary" href="/category/featured/">
+    Home
+  </a>
+{% else %}
+  <a class="btn btn-link" href="/category/featured/">
+    Home
+  </a>
+{% endif %}
+{% for category in categories %}
+  {% if category == currentcategory %}
+    <a class="btn btn-primary" href="/category/{{category.slug}}/">
+      {{category.title}}
     </a>
   {% else %}
-    {% if not currentcategory %}
-      <a class="btn btn-primary" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
-        Featured
-      </a>
-    {% else %}
-      <a class="btn btn-link" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/featured/">
-        Featured
-      </a>
-    {% endif %}
-    {% for category in categories %}
-      {% if category == currentcategory %}
-        <a class="btn btn-primary" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
-          {{category.title}}
-        </a>
-      {% else %}
-        <a class="btn btn-link" href="/issue/{{currentissue.year}}-{{currentissue.month}}/category/{{category.slug}}/">
-          {{category.title}}
-        </a>
-      {% endif %}
-    {% endfor %}
+    <a class="btn btn-link" href="/category/{{category.slug}}/">
+      {{category.title}}
+    </a>
   {% endif %}
-{% endif %}
-
+{% endfor %}

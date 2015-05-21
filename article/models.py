@@ -23,7 +23,7 @@ class Article(models.Model):
   coverletter = models.TextField()
 
   # Publishing info
-  issue = models.ForeignKey(
+  issue = models.ForeignKey( # TODO remove
       "article.Issue",
       related_name="articles",
       null=True,
@@ -35,13 +35,13 @@ class Article(models.Model):
       null=True,
       blank=True
   )
-  ordering_category = models.IntegerField(default=0)
-  ordering_featured = models.IntegerField(default=0)
+  ordering_category = models.IntegerField(default=0) # TODO remove
+  ordering_featured = models.IntegerField(default=0) # TODO remove
   featured = models.BooleanField(default=False)
 
   # Blog info
-  blog_article = models.BooleanField(default=False)
-  blog_date = models.DateField(null=True, default=None, blank=True)
+  blog_article = models.BooleanField(default=False) # TODO rename to blog
+  blog_date = models.DateField(null=True, default=None, blank=True) # TODO rename to date
 
   # User content
   comments = models.ManyToManyField(
@@ -62,18 +62,13 @@ class Article(models.Model):
     return "/article/support/%s/%s.html" % (self.id, title_slug)
 
   def __unicode__(self):
-    if not self.issue and not self.category:
-      return "%s (no issue and category)" % self.title
     if not self.category:
       return "%s (no category)" % self.title
-    if not self.issue:
-      return "%s (no issue)" % self.title
     return self.title
 
   def published(self):
     today = datetime.datetime.now().date()
-    return ((self.blog_article and (today >= self.blog_date)) or
-            (not self.blog_article and self.issue.published))
+    return (self.blog_date and (today >= self.blog_date))
 
 
 class Category(models.Model):
