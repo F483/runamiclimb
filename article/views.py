@@ -17,8 +17,7 @@ from comment import forms as comment_forms
 from comment import models as comment_models
 
 def blog(request):
-  articles = Article.objects.filter(blog_article=True)
-  articles = articles.order_by('-blog_date')
+  articles = Article.objects.filter(blog=True)
   templatearguments = { "articles" : articles }
   return render(request, 'article/blog.html', templatearguments)
 
@@ -67,8 +66,8 @@ def edit(request, article_id):
       article.coverletter = form.cleaned_data["coverletter"]
       article.category = form.cleaned_data["category"]
       article.featured = form.cleaned_data["featured"]
-      article.blog_article = form.cleaned_data["blog_article"]
-      article.blog_date = form.cleaned_data["blog_date"]
+      article.blog = form.cleaned_data["blog"]
+      article.date = form.cleaned_data["date"]
       article.save()
       return HttpResponseRedirect(article.url())
   else: # "GET"

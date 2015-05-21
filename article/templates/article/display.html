@@ -5,10 +5,9 @@
 
     <h1>{{ article.title }}</h1>
     <p>
-      {% if not article.blog_article %}
+      {% if not article.blog %}
         {{ article.author }} -
       {% endif %}
-      {{ article.blog_date }}
     </p>
 
     <p> <hr> </p>

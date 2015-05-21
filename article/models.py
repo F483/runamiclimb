@@ -22,13 +22,7 @@ class Article(models.Model):
   email = models.EmailField(max_length=1024)
   coverletter = models.TextField()
 
-  # Publishing info
-  issue = models.ForeignKey( # TODO remove
-      "article.Issue",
-      related_name="articles",
-      null=True,
-      blank=True
-  )
+  # Category info
   category = models.ForeignKey(
       "article.Category",
       related_name="articles",
@@ -36,14 +30,12 @@ class Article(models.Model):
       blank=True
   )
   featured = models.BooleanField(default=False)
-
-  # Blog info
-  blog_article = models.BooleanField(default=False) # TODO rename to blog
-  blog_date = models.DateField(null=True, default=None, blank=True) # TODO rename to date
+  blog = models.BooleanField(default=False)
+  date = models.DateField(null=True, default=None, blank=True)
 
   # User content
   comments = models.ManyToManyField(
-    'comment.Comment', related_name="article_comments", null=True, blank=True
+      'comment.Comment', related_name="article_comments", null=True, blank=True
   )
 
   def title_slug(self):
@@ -66,8 +58,10 @@ class Article(models.Model):
 
   def published(self):
     today = datetime.datetime.now().date()
-    return (self.blog_date and (today >= self.blog_date))
+    return (self.date and (today >= self.date))
 
+  class Meta:
+    ordering = ["-date"]
 
 class Category(models.Model):
 

@@ -78,11 +78,9 @@ class Edit(forms.Form):
       required=False
   )
   featured = forms.BooleanField(label="Featured", required=False)
-
-  # Blog info
-  blog_article = forms.BooleanField(label="Blog article", required=False)
-  blog_date = forms.DateField(
-    label="Blog date",
+  blog = forms.BooleanField(label="Blog article", required=False)
+  date = forms.DateField(
+    label="Date",
     help_text="Future dates will automaticly not be listed.",
     widget=forms.widgets.DateInput(attrs={'class' : 'datepicker'}),
   )
@@ -97,6 +95,6 @@ class Edit(forms.Form):
     self.fields["content"].initial = article.content
     self.fields["category"].initial = article.category
     self.fields["featured"].initial = article.featured
-    self.fields["blog_article"].initial = article.blog_article
-    self.fields["blog_date"].initial = article.blog_date
+    self.fields["blog"].initial = article.blog
+    self.fields["date"].initial = article.date
 

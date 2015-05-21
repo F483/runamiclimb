@@ -3,8 +3,12 @@
 <div class="panel panel-default panel-body article_preview">
 
   <a href="{{article.url}}"><h3>{{ article.title }}</h3></a>
-  {% if article.blog_article %}
-    <p> {{ article.blog_date }} </p>
+  {% if article.blog %}
+    <p>
+      {% if not article.blog %}
+        {{ article.author }} -
+      {% endif %}
+    </p>
   {% endif %}
 
   <p>

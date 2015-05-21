@@ -5,16 +5,18 @@ from article.models import Article, Category, Issue
 class ArticleAdmin(admin.ModelAdmin):
 
   list_display = (
-    'title', 'author', 'email',
-    'issue', 'category',
+    'title', 
+    'author', 
+    'email',
+    'category',
     'featured',
-    'blog_article'
+    'blog',
+    'date'
   )
   fieldsets = [
     ('Article content', {'fields': ['title', 'preview', 'content', 'gallery']}),
     ('Author info',     {'fields': ['author', 'email', 'coverletter']}),
-    ('Publishing info', {'fields': ['issue', 'category', 'featured'] }),
-    ('Blog info', { 'fields': [ 'blog_article', 'blog_date' ] }),
+    ('Publishing info', {'fields': ['category', 'featured', 'blog', 'date'] }),
   ]
 
 
