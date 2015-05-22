@@ -104,6 +104,8 @@ def archive(request):
 def listing(request, category_slug):
 
   articles = Article.objects.all()
+  if not request.user.is_superuser:
+      articles = filter(lambda article: article.published(), articles)
 
   # category
   currentcategory = None
@@ -128,7 +130,7 @@ def listing(request, category_slug):
 def display(request, article_id):
   article = get_object_or_404(Article, id=article_id)
   if(not article.published() and not request.user.is_superuser):
-    raise PermissionDenied # TODO test it!
+    raise PermissionDenied
 
   if request.method == "POST":
     support_form = Support(request.POST)
