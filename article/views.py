@@ -1,4 +1,5 @@
 import uuid
+import datetime
 from decimal import Decimal
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
@@ -105,7 +106,8 @@ def listing(request, category_slug):
 
   articles = Article.objects.all()
   if not request.user.is_superuser:
-      articles = filter(lambda article: article.published(), articles)
+    today = datetime.datetime.now().date()
+    articles = articles.exclude(date=None).filter(date__lte=today)
 
   # category
   currentcategory = None
