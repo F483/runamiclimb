@@ -2,25 +2,27 @@
 
 {% block content %}
   {% for issue in issues %}
-    <div class="row">
-      <div class="col-sm-6 article_display">
-        {% if issue.gallery and issue.gallery.photos.first %}
-          {% with issue.gallery.photos.first as photo %}
-            <a href="{{ issue.pdf.url }}">
-              <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
-            </a>
-          {% endwith %}
-        {% endif %}
+    <p>
+      <div class="row">
+        <div class="col-sm-6 article_display">
+          {% if issue.gallery and issue.gallery.photos.first %}
+            {% with issue.gallery.photos.first as photo %}
+              <a href="{{ issue.pdf.url }}">
+                <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+              </a>
+            {% endwith %}
+          {% endif %}
+        </div>
+        <div class="col-sm-6 article_display">
+          {% if issue.gallery and issue.gallery.photos.last %}
+            {% with issue.gallery.photos.last as photo %}
+              <a href="{{ issue.pdf.url }}">
+                <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+              </a>
+            {% endwith %}
+          {% endif %}
+        </div>
       </div>
-      <div class="col-sm-6 article_display">
-        {% if issue.gallery and issue.gallery.photos.last %}
-          {% with issue.gallery.photos.last as photo %}
-            <a href="{{ issue.pdf.url }}">
-              <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
-            </a>
-          {% endwith %}
-        {% endif %}
-      </div>
-    </div>
+    </p>
   {% endfor %}
 {% endblock %}
