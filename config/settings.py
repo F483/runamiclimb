@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'sortedm2m',
     'paypal.standard.ipn',
     'debug_toolbar.apps.DebugToolbarConfig',
+    'pagination',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

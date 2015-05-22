@@ -1,6 +1,9 @@
 {% extends "base.html" %}
+{% load pagination_tags %}
+
 
 {% block content %}
+  {% autopaginate articlesdata 1 %}
   {% for page in articlesdata %}
     <div class="row">
       {% for column in page %}
@@ -12,4 +15,5 @@
       {% endfor %}
     </div>
   {% endfor %}
+  {% paginate %}
 {% endblock %}
