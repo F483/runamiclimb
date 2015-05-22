@@ -15,6 +15,20 @@ from page.models import Page
 from article import forms
 from comment import forms as comment_forms
 from comment import models as comment_models
+from photologue.models import Gallery
+
+def chunks(items, size): # TODO put in common
+  return [items[i:i+size] for i in range(0, len(items), size)]
+
+def baskets(items, count): # TODO put in common
+  _baskets = [[] for _ in range(count)]
+  for i, item in enumerate(items):
+    _baskets[i % count].append(item)
+  return filter(None, _baskets) 
+
+def previewlistformat(items):
+  pages = chunks(items, 10)
+  return map(lambda page: baskets(page,2), pages)
 
 def submit(request):
 
@@ -76,6 +90,12 @@ def edit(request, article_id):
   }
   return render(request, 'common/submit.html', templatearguments)
 
+def sitegallery(request):
+  gallery = get_object_or_404(Gallery, title="sitegallery")
+  sitegallerydata = previewlistformat(gallery.photos.all())
+  templatearguments = { 'sitegallerydata' : sitegallerydata }
+  return render(request, 'article/sitegallery.html', templatearguments)
+
 def archive(request):
   issues = Issue.objects.filter(published=True).exclude(pdf=None)
   templatearguments = { 'issues' : issues }
@@ -97,11 +117,9 @@ def listing(request, category_slug):
       raise Http404
     articles = articles.filter(category=currentcategory)
 
-  middle = len(articles) / 2
-  middle = (len(articles) % 2 != 0) and (middle + 1) or middle
+  articlesdata = previewlistformat(articles)
   templatearguments = {
-    "left_articles" : articles[:middle],
-    "right_articles" : articles[middle:],
+    "articlesdata" : articlesdata,
     "currentcategory" : currentcategory
   }
   return render(request, 'article/listing.html', templatearguments)

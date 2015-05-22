@@ -25,6 +25,9 @@ urlpatterns = patterns('article.views',
   # archive view
   url(r"^archive.html$", "archive"),
 
+  # site gallery
+  url(r"^gallery.html$", "sitegallery"),
+
   # XXX retired urls preserved in case of links
   url(r"^article/blog.html$", "listing", { 'category_slug' : None }),
   url(r"^issue/[0-9]+\-[0-9]+/$", "listing", { 'category_slug' : None }),

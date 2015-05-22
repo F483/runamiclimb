@@ -1,12 +1,10 @@
-{% if not currentcategory %}
-  <a class="btn btn-primary" href="/category/featured/">
-    Home
-  </a>
+
+{% if not currentcategory and not sitegallerydata %}
+  <a class="btn btn-primary" href="/category/featured/"> Home </a>
 {% else %}
-  <a class="btn btn-link" href="/category/featured/">
-    Home
-  </a>
+  <a class="btn btn-link" href="/category/featured/"> Home </a>
 {% endif %}
+
 {% for category in categories %}
   {% if category == currentcategory %}
     <a class="btn btn-primary" href="/category/{{category.slug}}/">
@@ -18,3 +16,9 @@
     </a>
   {% endif %}
 {% endfor %}
+
+{% if sitegallerydata %}
+  <a class="btn btn-primary" href="/gallery.html"> Gallery </a>
+{% else %}
+  <a class="btn btn-link" href="/gallery.html"> Gallery </a>
+{% endif %}

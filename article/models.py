@@ -106,7 +106,5 @@ class Issue(models.Model):
     return "%s %i" % (months[self.month -1], self.year)
 
   class Meta:
-
     ordering = ["-year", "-month"]
-    #unique_together = (("user", "bounty"),)
 

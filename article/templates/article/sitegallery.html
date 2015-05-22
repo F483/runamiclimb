@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% for page in articlesdata %}
+  {% for page in sitegallerydata %}
     <div class="row">
       {% for column in page %}
         <div class="col-sm-6">
-          {% for article in column %}
-            {% include "article/preview.html" %}
+          {% for photo in column %}
+            {% include "article/photopreview.html" %}
           {% endfor %}
         </div>
       {% endfor %}
