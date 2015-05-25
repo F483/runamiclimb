@@ -5,13 +5,16 @@
   {% autopaginate sitegallerydata 1 %}
   {% for page in sitegallerydata %}
     <div class="row">
-      {% for column in page %}
+      {% for column in page.columns %}
         <div class="col-sm-6">
           {% for photo in column %}
             {% include "article/photopreview.html" %}
           {% endfor %}
         </div>
       {% endfor %}
+      {% with page.items as caruselphotos %}
+        {% include "common/gallerycarousel.html" %}
+      {% endwith %}
     </div>
   {% endfor %}
   {% paginate %}

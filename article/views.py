@@ -29,7 +29,7 @@ def baskets(items, count): # TODO put in common
 
 def previewlistformat(items):
   pages = chunks(items, 10)
-  return map(lambda page: baskets(page,2), pages)
+  return map(lambda page: {'columns' : baskets(page,2), 'items' : page}, pages)
 
 def submit(request):
 
@@ -93,8 +93,12 @@ def edit(request, article_id):
 
 def sitegallery(request):
   gallery = get_object_or_404(Gallery, title="sitegallery")
-  sitegallerydata = previewlistformat(gallery.photos.all())
-  templatearguments = { 'sitegallerydata' : sitegallerydata }
+  sitegalleryphotos = gallery.photos.all()
+  sitegallerydata = previewlistformat(sitegalleryphotos)
+  templatearguments = { 
+      'sitegallerydata' : sitegallerydata,
+      'caruseltitle' : 'Gallery'
+  }
   return render(request, 'article/sitegallery.html', templatearguments)
 
 def archive(request):

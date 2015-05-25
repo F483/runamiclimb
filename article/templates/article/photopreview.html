@@ -2,17 +2,25 @@
 
 <div class="panel panel-default panel-body article_display">
 
-  <a href="{{ photo.image.url }}"><h3>{{ photo.title }}</h3></a>
+  <a href="#" data-toggle="modal" data-target="#galleryModal"
+     data-local="#galleryCarousel">
+    <h3>{{ photo.title }}</h3>
+  </a>
 
   <p>
-    <a href="{{ photo.image.url }}">
+    <a href="#" data-toggle="modal" data-target="#galleryModal"
+       data-local="#galleryCarousel">
       <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
     </a>
-
     {{ photo.caption }}
   </p>
 
-  <p><a href="{{ photo.image.url }}"><b>View full image</b></a></p>
+  <p>
+    <a href="#" data-toggle="modal" data-target="#galleryModal"
+       data-local="#galleryCarousel">
+      <b>View images</b>
+    </a>
+  </p>
 
 </div>
 
