@@ -20,16 +20,16 @@ urlpatterns = patterns('article.views',
   url(r"^article/edit/%s/[a-z0-9\-]+\.html$" % article_id, "edit"),
 
   # submit article view
-  url(r"^article/submit.html$", "submit"),
+  url(r"^article/submit\.html$", "submit"),
 
   # archive view
-  url(r"^archive.html$", "archive"),
+  url(r"^archive\.html$", "archive"),
 
   # site gallery
-  url(r"^gallery.html$", "sitegallery"),
+  url(r"^gallery\.html$", "sitegallery"),
 
-  # XXX retired urls preserved in case of links
-  url(r"^article/blog.html$", "listing", { 'category_slug' : None }),
+  # retired urls preserved in case of links
+  url(r"^article/blog\.html$", "listing", { 'category_slug' : None }),
   url(r"^issue/[0-9]+\-[0-9]+/$", "listing", { 'category_slug' : None }),
   url(r"^issue/[0-9]+\-[0-9]+/category/%s/$" % category_slug, "listing"),
 )
