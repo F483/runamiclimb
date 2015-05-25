@@ -6,7 +6,7 @@
   {% autopaginate articlesdata 1 %}
   {% for page in articlesdata %}
     <div class="row">
-      {% for column in page %}
+      {% for column in page.columns %}
         <div class="col-sm-6">
           {% for article in column %}
             {% include "article/preview.html" %}
