@@ -28,13 +28,15 @@
             <div class="carousel-inner">
               {% for photo in caruselphotos %}
                 <div class="item {% if forloop.counter0 == 0 %}active{% endif %}">
-                  <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
-                  <!--
-                  <div class="carousel-caption">
-                    <h3>{{ photo.title }}</h3>
-                    <p>{{ photo.caption }}</p>
+                  <div class="text_center">
+                    <img src="{{ photo.get_display_url }}" alt="{{ photo.title }}">
+                    <!--
+                    <div class="carousel-caption">
+                      <h3>{{ photo.title }}</h3>
+                      <p>{{ photo.caption }}</p>
+                    </div>
+                    -->
                   </div>
-                  -->
                 </div>
               {% endfor %}
             </div>
