@@ -20,7 +20,7 @@ urlpatterns = patterns('article.views',
   url(r"^article/edit/%s/[a-z0-9\-]+\.html$" % article_id, "edit"),
 
   # submit article view
-  url(r"^article/submit\.html$", "submit"), # FIXME why 404 on live server?
+  url(r"^article/submit$", "submit"),
 
   # archive view
   url(r"^archive\.html$", "archive"),
