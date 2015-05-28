@@ -7,6 +7,9 @@ ratio = r"(?P<ratio>[0-9]+\.[0-9]+)"
 
 urlpatterns = patterns('article.views',
   
+  # submit article view
+  url(r"^article/submit\.html$", "submit"),
+
   # homepage view
   url(r"^$", "listing", { 'category_slug' : None }),
   
@@ -18,9 +21,6 @@ urlpatterns = patterns('article.views',
 
   # edit article view
   url(r"^article/edit/%s/[a-z0-9\-]+\.html$" % article_id, "edit"),
-
-  # submit article view
-  url(r"^article/submit$", "submit"),
 
   # archive view
   url(r"^archive\.html$", "archive"),
